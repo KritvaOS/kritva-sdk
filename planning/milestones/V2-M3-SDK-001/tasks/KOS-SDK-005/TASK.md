@@ -1,11 +1,11 @@
-# KOS-SDK-005 — Implement Sense, Motion, Mind and Skill API Adapters
+# KOS-SDK-005 — Implement Sense API Adapter
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M3-SDK-001.
+Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M3-SDK-001. Narrowed on 2026-11-24; Motion, Mind and Skill moved to KOS-SDK-009.
 
-Objective: provide typed Python adapters for approved capability contracts, preserving component ownership and semantics.
+Objective: provide a typed Python adapter for the approved Sense 0.1.0 contract, preserving Sense ownership and semantics.
 
-In scope: contract inventory, adapter interfaces, version declarations, request/response models, error mapping and conformance tests.
+In scope: contract inventory, adapter interface, version declaration, request/response models, error mapping and conformance tests against `contract/SENSE_CONTRACT.md` and `contract/sense-sample.schema.json`.
 
-Out of scope: upstream contract changes, capability engines, motion control, inference and Skill orchestration.
+Out of scope: upstream contract changes, sensing engines, Motion, Mind and Skill adapters.
 
-Dependencies: approved, versioned Sense, Motion, Mind and Skill contracts; implement only where contract maturity permits.
+Dependencies: Sense 0.1.0 (APPROVED) pinned by exact commit SHA; SDK-003 client foundation.

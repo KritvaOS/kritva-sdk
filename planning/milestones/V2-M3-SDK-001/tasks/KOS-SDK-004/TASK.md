@@ -9,3 +9,5 @@ In scope: API review, client adapter, authentication injection boundary, error m
 Out of scope: Control Plane server, billing/booking, authorization policy and credential issuance.
 
 Dependencies: approved Control Plane API, repository ownership decision and Security Owner review.
+
+Note (2026-11-24): the Control Plane API is NOT_AVAILABLE. This task must not start, and no API shape may be assumed, until an approved service API exists.
