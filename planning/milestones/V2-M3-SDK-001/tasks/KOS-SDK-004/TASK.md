@@ -1,0 +1,13 @@
+# KOS-SDK-004 — Define and Implement Control Plane Client Adapter
+
+Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M3-SDK-001.
+
+Objective: provide a typed client for approved Control Plane APIs without owning the service or its authorization policy.
+
+In scope: API review, client adapter, authentication injection boundary, error mapping, timeout/cancellation and integration tests.
+
+Out of scope: Control Plane server, billing/booking, authorization policy and credential issuance.
+
+Dependencies: approved Control Plane API, repository ownership decision and Security Owner review.
+
+Note (2026-11-24): the Control Plane API is NOT_AVAILABLE. This task must not start, and no API shape may be assumed, until an approved service API exists.
