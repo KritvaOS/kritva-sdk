@@ -20,3 +20,15 @@
 - Distribution `kritva-sdk`, import `kritva_sdk`; vendored pinned schemas with drift check; hand-written typed models.
 - Rewrote API.md and ARCHITECTURE.md; revised ADR-001..003, KOS-SDK-001 criteria and KOS-SDK-003 scope.
 - Central change required: KOS-SDK-003 title and the TASKS.md pin in kritva-program planning_inventory.json.
+
+## 2026-11-25 (open-item alignment)
+- Python support changed to 3.12+; zero runtime dependencies; kritva-sense validator is a test/CI oracle only.
+- Sense stream and frame-graph contracts recorded as APPROVED and eligible (staged under KOS-SDK-005); Mind recorded as DRAFT.
+- KOS-SDK-002 narrowed to package foundation; schema vendoring, drift check and Sense validation stay in KOS-SDK-003.
+- PyPI availability check recorded as an open check; PD-021 and the SDK-002 start remain owner decisions.
+
+## 2026-11-25 (SDK-002 start)
+- Owner approved the KOS-SDK-002 start (package foundation only; scope per the task file).
+- Layout is root-level `src/kritva_sdk/`, matching kritva-sense; docs updated from `sdk/python/`.
+- Implemented: `pyproject.toml` (setuptools==80.9.0), `kritva_sdk` with `__version__ = 0.1.0.dev0`, `py.typed`, hash-pinned build requirements, sdist normaliser, unit and packaging tests.
+- Task status in `planning/TASKS.md` is unchanged here to avoid a kritva-program re-pin before merge; status moves with the program record.

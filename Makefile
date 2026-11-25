@@ -1,7 +1,7 @@
 # Kritva V2 required gates. Until implemented, gates fail explicitly (NOT_IMPLEMENTED).
-.PHONY: check lint test-unit test-integration test-regression test docs-check acceptance
+.PHONY: check lint test-integration test-regression test docs-check acceptance test-unit packaging-test
 
-check lint test-unit test-integration test-regression test docs-check acceptance:
+check lint test-integration test-regression test docs-check acceptance:
 	@echo "NOT_IMPLEMENTED: $@"
 	@exit 3
 
@@ -44,3 +44,11 @@ preflight-hook-on:
 
 preflight-hook-off:
 	git config kritva.preflightOnPush false
+
+# KOS-SDK-002: unit tests need only the standard library. packaging-test builds in a hash-pinned environment and needs
+# network access to PyPI or a wheelhouse (KRITVA_WHEELHOUSE).
+test-unit:
+	python3 -m unittest discover -s tests/unit -v
+
+packaging-test:
+	KRITVA_PACKAGING_TESTS=1 python3 -m unittest discover -s tests/packaging -v

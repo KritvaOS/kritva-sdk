@@ -51,7 +51,7 @@ Runtime / platform / hardware integrations
 
 ## Repository Structure and File Responsibilities
 
-- `sdk/python/`: Python package source, introduced with SDK-002.
+- `src/kritva_sdk/`: Python package source (SDK-002); `pyproject.toml` and `release/` hold metadata and the pinned build.
 - `tests/`: unit, contract, integration and regression tests.
 - `examples/`: executable developer examples.
 - `docs/`: API and developer guides.
@@ -74,7 +74,7 @@ The SDK is a client-side library. It sits above Skill and approved service APIs 
 
 ## Toolchain and Development Workflow
 
-Python is the first language (3.11+ proposed, see [ADR-001](docs/adr/ADR-001-sdk-language-and-package.md)). No package build exists yet. `make hooks-install` enables the pre-push hook, and `make preflight` runs the CI checks that are implemented. Engineering gates (`make check`, `make test`) report NOT_IMPLEMENTED and exit non-zero; that is not a pass.
+Python is the first language (3.12+ proposed, see [ADR-001](docs/adr/ADR-001-sdk-language-and-package.md)). No package build exists yet. `make hooks-install` enables the pre-push hook, and `make preflight` runs the CI checks that are implemented. Engineering gates (`make check`, `make test`) report NOT_IMPLEMENTED and exit non-zero; that is not a pass.
 
 ## Dependencies and Interfaces
 

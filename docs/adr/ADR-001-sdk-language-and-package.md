@@ -10,15 +10,20 @@ Status: PROPOSED (owner-approved items marked). Local to kritva-sdk; not a centr
 | CODEOWNER | `@dineshannayya` | Owner confirmed, 2026-11-24 |
 | SDK placement | Separate repository `KritvaOS/kritva-sdk` (D-149, supersedes D-144 for the SDK) | Owner decision, 2026-11-24; merged in kritva-program PR 139 |
 | First language | Python; C++ bindings and language parity deferred | PROPOSED |
-| Python support | 3.11+ with an explicit, bounded supported-version matrix | PROPOSED |
-| Distribution name | `kritva-sdk` (replaces the earlier `kritva` proposal) | PROPOSED; PyPI availability not confirmed (a pip lookup found neither name, which is not conclusive) |
+| Python support | 3.12+ (replaces 3.11+: Sense and Mind require 3.12 and all sibling CI uses 3.12); CI tests the minimum and the current supported version | PROPOSED |
+| Distribution name | `kritva-sdk` (replaces the earlier `kritva` proposal). PyPI normalizes `-`, `_` and `.`, so `kritva-sdk` and `kritva_sdk` are the same distribution name; `kritva_sdk` is the import package | PROPOSED; PyPI availability not confirmed (see Open check) |
 | Import namespace | `kritva_sdk`, avoiding a generic top-level `kritva` | PROPOSED |
 | First release shape | Contract-first library: typed models and validators for approved contracts; no network client | PROPOSED |
 | Model strategy | Hand-written typed models; vendored JSON Schema stays normative; conformance tests tie them together; generated code is not the public API in the first release | PROPOSED |
 | Schema handling | Vendored immutable snapshots with provenance (repo, path, version, tag, commit SHA, checksum, approval status) and a CI drift check; no build-time fetch | PROPOSED |
+| Runtime dependencies | None in the first release (standard library only). `jsonschema` may be a test-only dependency. Build tooling is pinned; the user's runtime environment is not | PROPOSED |
+| Validation | The SDK carries its own validation against its vendored schema. The pinned kritva-sense validator, generator and conformance harness are test/CI oracles only, with cross-validation tests; upstream is authoritative for contract semantics | PROPOSED |
 | ROS 2 | Optional extra later; base import must not require it | PROPOSED |
 | First release | 0.1.0 preview only after acceptance gates pass | PROPOSED |
 
 ## Notes
 - The central private decisions D-039/D-063 on visibility class were not readable from this repository. This ADR records the owner's decision and does not cite them as satisfied.
 - Hard real-time guarantees are not claimed from Python.
+
+## Open check
+PyPI availability of `kritva-sdk` is unconfirmed and could not be queried from the planning environment. Check it directly (for example `pip index versions kritva-sdk` or the PyPI project page for `kritva-sdk`); a 404 means not currently listed, and final availability is confirmed only when PyPI accepts an upload.

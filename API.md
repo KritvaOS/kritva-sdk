@@ -6,7 +6,8 @@
 
 The first SDK release is a **contract-first Python library**: typed models and validators over approved, versioned upstream contract schemas. It is not a network client.
 
-- Eligible contract today: **Sense contract 0.1.0** (APPROVED; pin tag `v0.2.0`, commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`).
+- Eligible contracts today, all from kritva-sense at pin tag `v0.2.0` (commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`): the **Sense sample contract 0.1.0**, the **stream contract 0.1.0** and the **frame-graph contract 0.1.0** (all APPROVED). Approval makes a contract eligible, not implemented.
+- Staging: the first increment implements the sample contract only; stream and frame-graph models follow under KOS-SDK-005, each with its own pin and conformance tests.
 - Explicitly excluded until their contracts are approved and versioned: Mind, Motion, Skill, Sim, Control Plane.
 - Explicitly excluded: any Core client (Core R1.0 is an in-process C++ API with no Python or network surface), any HTTP or other network implementation, any ROS 2 or simulator adapter.
 
@@ -45,8 +46,12 @@ Models are hand-written and typed. The vendored JSON Schema stays normative; con
 
 A transport abstraction and async clients are deferred until an approved Control Plane or Community runtime API exists (ADR-003). No placeholder module is created for them.
 
+## Decisions resolved (2026-11-24 alignment)
+
+1. **Validator:** the SDK has no runtime dependency on kritva-sense. It carries its own hand-written validation against its vendored schema; the pinned kritva-sense validator, generator and conformance harness are test and CI oracles with cross-validation tests. Upstream is authoritative for contract semantics.
+2. **Python and dependencies:** Python 3.12+; zero runtime dependencies in the first release; `jsonschema` test-only.
+3. **Sense stream and frame-graph contracts:** approved and eligible, implemented in a later increment under KOS-SDK-005.
+
 ## Open decisions
 
-1. Whether `kritva_sdk.sense` reuses the kritva-sense reference validator as a dependency or carries its own validator checked against the same schema. The SDK must not fork contract semantics.
-2. Handling of the Sense stream and frame-graph contracts, which are separate documents in kritva-sense and not covered by this scope.
-3. Python version matrix (3.11+ proposed) and the validation library (for example `jsonschema`), subject to dependency review.
+PyPI availability of `kritva-sdk` (to be checked directly, ADR-001). Further decisions arise as SDK-002 and SDK-003 are specified.

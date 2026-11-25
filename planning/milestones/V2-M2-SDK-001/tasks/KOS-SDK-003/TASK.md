@@ -4,7 +4,7 @@ Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M2-SDK-001. Rescoped 2026-11-24:
 
 Objective: implement explicit configuration, typed errors, contract-version compatibility declarations and typed Sense 0.1.0 models and validation over vendored, pinned schemas.
 
-In scope: configuration validation, error model preserving upstream codes, supported-contract declarations, vendored schema snapshots with provenance and a drift check, hand-written Sense models, conformance and negative tests.
+In scope: configuration validation, error model preserving upstream codes, supported-contract declarations, vendored schema snapshots with provenance and a drift check, hand-written Sense models, conformance and negative tests, and cross-validation against the pinned kritva-sense validator and generator used as test/CI oracles only (no runtime dependency).
 
 Out of scope: any network client or transport, Core, Control Plane, Mind, Motion, Skill and Sim adapters, capability business logic, robot safety.
 
