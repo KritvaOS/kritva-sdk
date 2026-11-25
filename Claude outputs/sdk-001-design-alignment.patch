@@ -1,0 +1,410 @@
+diff --git a/API.md b/API.md
+index e09b5c6..ec1f3e9 100644
+--- a/API.md
++++ b/API.md
+@@ -1,29 +1,52 @@
+ # Kritva SDK Public API Design
+ 
+-**Status:** SKELETON / PROPOSED. No API below is approved or implemented.
++**Status:** PROPOSED (SDK-001 design, aligned 2026-11-24; owner approval pending). No API below is implemented or stable.
++
++## Scope of the first release
++
++The first SDK release is a **contract-first Python library**: typed models and validators over approved, versioned upstream contract schemas. It is not a network client.
++
++- Eligible contract today: **Sense contract 0.1.0** (APPROVED; pin tag `v0.2.0`, commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`).
++- Explicitly excluded until their contracts are approved and versioned: Mind, Motion, Skill, Sim, Control Plane.
++- Explicitly excluded: any Core client (Core R1.0 is an in-process C++ API with no Python or network surface), any HTTP or other network implementation, any ROS 2 or simulator adapter.
++
++Distribution name `kritva-sdk`, import namespace `kritva_sdk` (ADR-001). Availability on PyPI is not yet confirmed.
++
++## Candidate public surface (illustrative, not stable)
+ 
+-## Candidate namespace
+ ```python
+-from kritva import KritvaClient, KritvaConfig
++from kritva_sdk import SdkConfig, supported_contracts
++from kritva_sdk.sense import SenseSample, validate_sample, parse_sample
++from kritva_sdk.errors import ContractError, UnsupportedContractVersion
+ 
+-client = KritvaClient(config=KritvaConfig(...))
+-await client.connect()
+-robot = await client.robots.get(robot_id="...")
+-await client.aclose()
++supported_contracts()            # {"sense": ("0.1.0",)}
++sample = parse_sample(payload)   # raises ContractError subclasses with upstream error codes
++validate_sample(payload)         # schema validation without building a model
+ ```
+ 
+-This is illustrative only. No class, method or import path is stable.
+-
+-## Candidate domains
+-| Domain | Responsibility | Authority |
++| Area | Responsibility | Authority |
+ |---|---|---|
+-| Client / Config | Client construction, config and lifecycle | SDK |
+-| Robot | Identity, capability discovery and status views | approved Core/runtime contracts |
+-| Sense | Sensor metadata and streams | kritva-sense |
+-| Motion | Command submission and lifecycle | kritva-motion |
+-| Mind | Request/context/result | kritva-mind |
+-| Skill | Manifest and execution interface | kritva-skill |
+-| Control Plane | Remote job/service operations | approved Control Plane API |
+-| Simulation | Optional simulation integration | approved simulation contract |
+-
+-Before implementation, each API specifies input/output, units, timestamps, lifecycle, errors, timeout, cancellation, idempotency, security and compatibility. All interfaces here remain proposals until reviewed and released.
++| `kritva_sdk.config` | Explicit, validated, immutable configuration | SDK |
++| `kritva_sdk.errors` | Typed errors that preserve upstream codes (for example `UNSUPPORTED_CONTRACT_VERSION`, `UNKNOWN_FIELD`, `INVALID_SENSOR_ID`, `INVALID_TIMESTAMP`) | SDK, codes from the contract |
++| `kritva_sdk.compat` | Supported-contract declarations and version checks that fail before any operation | SDK |
++| `kritva_sdk.sense` | Typed sample models, parse and validate, serialization | kritva-sense (normative schema), SDK (Python surface) |
++
++Models are hand-written and typed. The vendored JSON Schema stays normative; conformance tests prove that model serialization and validation agree with it. Generated code is not the public API in the first release.
++
++## Behavior rules
++
++- Units, timestamps (`clock`, `unit`, `value`), frame identifiers, `validity` and `error_code` semantics are preserved exactly as the contract defines them; no conversion is hidden.
++- Unknown fields are rejected, as the contract requires. Unsupported contract versions fail clearly and early.
++- Validation is synchronous and pure (no I/O); it is safe to call from async code. No timeout or cancellation semantics are needed until a network surface exists.
++- The base import has no dependency on ROS 2, a simulator, hardware or a network library.
++- Client-side validation never replaces server-side authorization or safety checks. Nothing here makes a real-time or physical-safety claim.
++
++## Deferred (extension points only)
++
++A transport abstraction and async clients are deferred until an approved Control Plane or Community runtime API exists (ADR-003). No placeholder module is created for them.
++
++## Open decisions
++
++1. Whether `kritva_sdk.sense` reuses the kritva-sense reference validator as a dependency or carries its own validator checked against the same schema. The SDK must not fork contract semantics.
++2. Handling of the Sense stream and frame-graph contracts, which are separate documents in kritva-sense and not covered by this scope.
++3. Python version matrix (3.11+ proposed) and the validation library (for example `jsonschema`), subject to dependency review.
+diff --git a/ARCHITECTURE.md b/ARCHITECTURE.md
+index 5c1236d..fdf603f 100644
+--- a/ARCHITECTURE.md
++++ b/ARCHITECTURE.md
+@@ -3,61 +3,51 @@
+ **Status:** PROPOSED — review required before implementation.
+ 
+ ## Purpose and position
+-Kritva SDK is the application-facing Python client library for approved Kritva APIs. It is not a second runtime, service, orchestration engine or contract authority.
++Kritva SDK is a contract-first Python library for approved Kritva contracts: typed models, validators, compatibility declarations and (later) clients. It is not a second runtime, service, orchestration engine or contract authority. The first release contains no network client, because no approved service API exists (Core R1.0 is an in-process C++ API; Control Plane and Sim are NOT_AVAILABLE).
+ 
+ ```text
+ Application
+     |
+-Kritva SDK
+-    +-- Control Plane client (only after API/security approval)
+-    +-- Core / Robot client
+-    +-- Sense / Motion / Mind / Skill adapters
+-    +-- optional Simulation adapter
+-    +-- optional ROS 2 adapter
++kritva_sdk (this repository)
++    +-- config, errors, compat
++    +-- sense   (Sense contract 0.1.0, first release)
++    +-- [future, only with approved contracts] motion, mind, skill
++    +-- [future extension points, none implemented] transport, Control Plane client,
++        simulation adapter, ROS 2 adapter
+     |
+-Versioned upstream contracts and APIs
+-    |
+-Kritva runtime and platform
++Vendored, pinned contract schemas (upstream owns them)
+ ```
+ 
+ ## Ownership
+-SDK owns public Python APIs, client construction/configuration/lifecycle, transport abstraction, typed models and errors, SDK-side validation, compatibility declarations, package distribution, examples and conformance tests.
++SDK owns public Python APIs, configuration, typed models and errors, SDK-side validation, compatibility declarations, packaging, examples and conformance tests.
++
++SDK does not own canonical component schemas, authorization policy, the Control Plane service, the simulator, robot drivers, motor control or safety validation. Dependency direction is preserved: Mind and Motion -> Skill. The SDK consumes approved contracts and never reverses ownership.
+ 
+-SDK does not own canonical component schemas, authorization policy, Control Plane service, simulator, robot drivers, motor control or safety validation.
++## Schema ownership and validation flow
++Contract schemas are **vendored as immutable snapshots**, never fetched at build or run time. Each snapshot records the upstream repository and path, approved version and tag, exact commit SHA, file checksum and approval status. A CI drift check compares each snapshot with its pinned upstream revision. Updating a schema is an explicit reviewed change.
++
++Flow: payload -> contract-version check (`UNSUPPORTED_CONTRACT_VERSION` fails first) -> schema validation against the vendored snapshot -> typed model. Errors keep the upstream code.
+ 
+ ## Target package layout (SDK-002 onward)
+ ```text
+ sdk/python/
+   pyproject.toml
+-  src/kritva/
++  src/kritva_sdk/
+     __init__.py
+-    client.py
+     config.py
+     errors.py
+-    models/
+-    core/
+-    robot/
+-    sense/
+-    motion/
+-    mind/
+-    skill/
+-    control_plane/
+-    transports/
+-    adapters/
+-      ros2/          # optional extra
+-      simulation/    # optional extra
+-tests/{unit,contract,integration,regression}/
+-examples/{quickstart,robot_discovery,sense_stream,motion_command,skill_execution}/
+-docs/{api,guides}/
+-schemas/             # SDK-owned schemas only
++    compat.py
++    sense/            # first release
++    _schemas/         # vendored, pinned snapshots with a provenance manifest
++tests/{unit,contract,regression}/
++docs/
+ ```
+-
+-Directories are introduced with their first real deliverable; no placeholder modules are required for this planning baseline.
++Directories are introduced with their first real deliverable. Motion, Mind and Skill packages appear only after their contracts are approved and tagged. Integration and transport directories are not created until an approved API exists.
+ 
+ ## Design principles
+-1. High-level APIs are transport-independent.
++1. The first release is transport-free; any later client is transport-independent.
+ 2. Sync/async behavior and cancellation are explicit.
+-3. Timeouts, retries and idempotency follow upstream contracts.
++3. Timeouts, retries and idempotency follow upstream contracts once a network surface exists.
+ 4. Resource-owning clients have deterministic close/context-manager behavior.
+ 5. Models preserve upstream units, timestamps, frame identifiers, lifecycle and error semantics.
+ 6. Base install is lightweight; ROS 2 and simulation are optional.
+@@ -68,4 +58,4 @@ Directories are introduced with their first real deliverable; no placeholder mod
+ SDK package SemVer is independent of upstream contract versions. Each adapter declares supported contract versions and rejects unsupported versions clearly. Breaking public API changes require a MAJOR version, migration notes and regression evidence.
+ 
+ ## Open decisions for SDK-001
+-Public namespace; sync/async surface; initial transport/authentication; Control Plane API boundary; pinned upstream contract versions; supported Python versions; distribution/index strategy; optional ROS 2 and simulator adapter contracts.
++Reuse of the kritva-sense reference validator versus an SDK validator; handling of the Sense stream and frame-graph contracts; Python version matrix and validation library; PyPI availability of `kritva-sdk`; the first network surface (Control Plane or a Community runtime API) and when it is approved; optional ROS 2 and simulator adapters. Resolved in this design: namespace `kritva_sdk`, vendored pinned schemas, hand-written models, transport deferred.
+diff --git a/REQUIREMENTS.md b/REQUIREMENTS.md
+index 1caf1b5..2d8e8b2 100644
+--- a/REQUIREMENTS.md
++++ b/REQUIREMENTS.md
+@@ -6,7 +6,7 @@
+ | ID | Requirement | Verification |
+ |---|---|---|
+ | SDK-F-001 | Provide a documented Python package and stable import namespace. | package/import tests |
+-| SDK-F-002 | Provide explicit client configuration and lifecycle. | unit tests |
++| SDK-F-002 | Provide explicit, immutable configuration; client lifecycle applies only once a network client exists. | unit tests |
+ | SDK-F-003 | Expose typed, version-aware interfaces for approved Kritva APIs. | contract tests |
+ | SDK-F-004 | Map upstream errors without losing source codes/context. | error tests |
+ | SDK-F-005 | Define bounded timeout and cancellation behavior for async operations. | async tests |
+diff --git a/TESTING.md b/TESTING.md
+index e7ed416..9c0950f 100644
+--- a/TESTING.md
++++ b/TESTING.md
+@@ -4,7 +4,7 @@
+ 
+ | Level | Purpose |
+ |---|---|
+-| Unit | Config, models, errors and client lifecycle |
++| Unit | Config, models, errors and compatibility checks (client lifecycle when a client exists) |
+ | Contract | Upstream schemas, versions and error mapping |
+ | Integration | Actual service boundaries and transport behavior |
+ | Regression | Preserve accepted API and behavior guarantees |
+diff --git a/docs/adr/ADR-001-sdk-language-and-package.md b/docs/adr/ADR-001-sdk-language-and-package.md
+index 15f7e44..478df8f 100644
+--- a/docs/adr/ADR-001-sdk-language-and-package.md
++++ b/docs/adr/ADR-001-sdk-language-and-package.md
+@@ -1,6 +1,6 @@
+ # ADR-001 — SDK Language, Package and Visibility
+ 
+-Status: PROPOSED (owner-approved items marked). Local to kritva-sdk; not a central program decision.
++Status: PROPOSED (owner-approved items marked). Local to kritva-sdk; not a central program decision. Revised 2026-11-24.
+ 
+ ## Decisions
+ 
+@@ -8,14 +8,17 @@ Status: PROPOSED (owner-approved items marked). Local to kritva-sdk; not a centr
+ |---|---|---|
+ | Repository visibility | PUBLIC | Owner decision, 2026-11-24 |
+ | CODEOWNER | `@dineshannayya` | Owner confirmed, 2026-11-24 |
++| SDK placement | Separate repository `KritvaOS/kritva-sdk` (D-149, supersedes D-144 for the SDK) | Owner decision, 2026-11-24; merged in kritva-program PR 139 |
+ | First language | Python; C++ bindings and language parity deferred | PROPOSED |
+ | Python support | 3.11+ with an explicit, bounded supported-version matrix | PROPOSED |
+-| Distribution name | `kritva` (PyPI-compatible) | PROPOSED; availability not yet verified |
+-| Import namespace | To be chosen and checked separately from the distribution name | OPEN |
+-| ROS 2 | Optional extra; base import must not require it | PROPOSED |
++| Distribution name | `kritva-sdk` (replaces the earlier `kritva` proposal) | PROPOSED; PyPI availability not confirmed (a pip lookup found neither name, which is not conclusive) |
++| Import namespace | `kritva_sdk`, avoiding a generic top-level `kritva` | PROPOSED |
++| First release shape | Contract-first library: typed models and validators for approved contracts; no network client | PROPOSED |
++| Model strategy | Hand-written typed models; vendored JSON Schema stays normative; conformance tests tie them together; generated code is not the public API in the first release | PROPOSED |
++| Schema handling | Vendored immutable snapshots with provenance (repo, path, version, tag, commit SHA, checksum, approval status) and a CI drift check; no build-time fetch | PROPOSED |
++| ROS 2 | Optional extra later; base import must not require it | PROPOSED |
+ | First release | 0.1.0 preview only after acceptance gates pass | PROPOSED |
+ 
+ ## Notes
+ - The central private decisions D-039/D-063 on visibility class were not readable from this repository. This ADR records the owner's decision and does not cite them as satisfied.
+-- Name availability on PyPI must be checked before SDK-002 relies on it.
+ - Hard real-time guarantees are not claimed from Python.
+diff --git a/docs/adr/ADR-002-sdk-client-and-lifecycle.md b/docs/adr/ADR-002-sdk-client-and-lifecycle.md
+index 8895c5b..fecd028 100644
+--- a/docs/adr/ADR-002-sdk-client-and-lifecycle.md
++++ b/docs/adr/ADR-002-sdk-client-and-lifecycle.md
+@@ -1,14 +1,12 @@
+-# ADR-002 — Client Model and Lifecycle
++# ADR-002 — Library Lifecycle, Configuration and Errors
+ 
+-Status: PROPOSED. To be finalized in KOS-SDK-001.
++Status: PROPOSED. Revised 2026-11-24 for the contract-first first release.
+ 
+ ## Proposal
+-- Async-first public API, with synchronous convenience wrappers over it.
+-- A client is created from explicit configuration, used as an async context manager, and closed deterministically.
+-- Timeout, cancellation and cleanup behavior is documented per call; errors are typed and deterministic.
+-- Authentication is injected through a boundary the SDK does not own. Client-side validation never replaces server authorization or safety checks.
++- The first release is a pure library: no connections, sessions or background tasks, so no client lifecycle exists yet.
++- Configuration is explicit, validated and immutable. There is no implicit global state and no environment-variable magic in the base import.
++- Errors are typed and deterministic and preserve upstream error codes (for example `UNSUPPORTED_CONTRACT_VERSION`). Error text never includes secrets.
++- Validation is synchronous and pure. Timeout and cancellation semantics are specified when a network surface is approved.
+ 
+-## Open questions
+-- Retry and idempotency policy per operation class.
+-- Configuration sources and precedence.
+-- Thread and event-loop rules for the synchronous wrappers.
++## Deferred
++When a client is introduced: async-first with synchronous convenience wrappers, async context manager with deterministic close, authentication injected through a boundary the SDK does not own, retry and idempotency per operation class.
+diff --git a/docs/adr/ADR-003-sdk-transport-abstraction.md b/docs/adr/ADR-003-sdk-transport-abstraction.md
+index fb58014..4897933 100644
+--- a/docs/adr/ADR-003-sdk-transport-abstraction.md
++++ b/docs/adr/ADR-003-sdk-transport-abstraction.md
+@@ -1,12 +1,14 @@
+-# ADR-003 — Transport Abstraction
++# ADR-003 — Transport: Deferred Until an Approved API Exists
+ 
+-Status: PROPOSED. To be finalized in KOS-SDK-001.
++Status: PROPOSED. Revised 2026-11-24 (replaces "HTTP transport first").
+ 
+-## Proposal
+-- HTTP-based service adapter first, behind a transport interface so other transports can be added without changing the public API.
+-- Adapters are isolated behind extras; ROS 2, simulator and hardware are never required by the base import.
+-- Dependency direction is preserved: Mind and Motion → Skill. Skill consumes capability interfaces; Mind must not depend on Skill. The SDK exposes these interfaces without reversing ownership.
++## Decision
++No transport abstraction or HTTP implementation is built in the first release. Core R1.0 is an in-process C++ API with no network surface, and the Control Plane and Sim are NOT_AVAILABLE, so a transport would have no consumer and any wire format would be invented.
+ 
+-## Open questions
+-- HTTP client library choice, with license, security and maintenance review.
+-- Wire format and versioning, taken from the approved upstream contracts; none is invented here.
++## Revisit when
++An approved Control Plane API or a Community runtime interface exists with a versioned contract. Then SDK-004 defines the transport boundary, HTTP library choice (license, security and maintenance review) and wire format from that contract.
++
++## Constraints that remain
++- Adapters stay isolated behind extras; ROS 2, simulator and hardware are never required by the base import.
++- Dependency direction is preserved: Mind and Motion -> Skill. The SDK exposes contracts without reversing ownership.
++- No SDK-only substitute is invented for a missing upstream contract.
+diff --git a/planning/CHANGELOG.md b/planning/CHANGELOG.md
+index 83ca55a..8b92a36 100644
+--- a/planning/CHANGELOG.md
++++ b/planning/CHANGELOG.md
+@@ -14,3 +14,9 @@
+ ## 2026-11-24 (contract register verification)
+ - Verified the contract dependency register against upstream contents; recorded exact commits and statuses.
+ - Recorded that Core R1.0 has no Python or network surface, and that Mind's contract status is inconsistent upstream.
++
++## 2026-11-24 (SDK-001 design alignment)
++- First release re-scoped to a contract-first library (Sense 0.1.0); no Core client or network transport until an approved API exists.
++- Distribution `kritva-sdk`, import `kritva_sdk`; vendored pinned schemas with drift check; hand-written typed models.
++- Rewrote API.md and ARCHITECTURE.md; revised ADR-001..003, KOS-SDK-001 criteria and KOS-SDK-003 scope.
++- Central change required: KOS-SDK-003 title and the TASKS.md pin in kritva-program planning_inventory.json.
+diff --git a/planning/MILESTONE.md b/planning/MILESTONE.md
+index ab8a925..8ca0e0e 100644
+--- a/planning/MILESTONE.md
++++ b/planning/MILESTONE.md
+@@ -6,7 +6,7 @@
+ |---|---|---|
+ | V2-M0 | Governance baseline | Adopt repository governance and acceptance structure; not a claim of central M0 closure |
+ | V2-M1 | V2-M1-SDK-001 | Local planning label only: Python-first architecture and developer API reviewed. No M1 progress is claimed until the program decides SDK ownership (a V2-M2 exit condition) |
+-| V2-M2 | V2-M2-SDK-001 | Python package, reproducible build, core client and compatibility |
++| V2-M2 | V2-M2-SDK-001 | Python package, reproducible build, configuration, contract compatibility and Sense models |
+ | V2-M3 | V2-M3-SDK-001 | Control Plane and capability API adapters |
+ | V2-M5 | V2-M5-SDK-001 | Simulation adapter and reproducible examples |
+ | V2-M7 | V2-M7-SDK-001 | Telemetry, events and execution results |
+diff --git a/planning/TASKS.md b/planning/TASKS.md
+index 5fa1d29..f588144 100644
+--- a/planning/TASKS.md
++++ b/planning/TASKS.md
+@@ -6,7 +6,7 @@
+ |---|---|---|---|---|
+ | KOS-SDK-001 | Define Python-first SDK architecture and developer API | V2-M1-SDK-001 | PROPOSED | capability contract review |
+ | KOS-SDK-002 | Establish Python package foundation and reproducible build | V2-M2-SDK-001 | PROPOSED | SDK-001 approval |
+-| KOS-SDK-003 | Implement core client, configuration and contract compatibility | V2-M2-SDK-001 | PROPOSED | SDK-001/002; Core contracts |
++| KOS-SDK-003 | Implement configuration, contract compatibility and Sense models | V2-M2-SDK-001 | PROPOSED | SDK-001/002; Sense 0.1.0 (APPROVED) |
+ | KOS-SDK-004 | Define and implement Control Plane client adapter | V2-M3-SDK-001 | PROPOSED | approved Control Plane API/security |
+ | KOS-SDK-005 | Implement Sense API adapter | V2-M3-SDK-001 | PROPOSED | Sense 0.1.0 (APPROVED); SDK-003 |
+ | KOS-SDK-006 | Add simulation adapter and executable examples | V2-M5-SDK-001 | PROPOSED | approved simulation contract |
+diff --git a/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/ACCEPTANCE_CRITERIA.md b/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/ACCEPTANCE_CRITERIA.md
+index 7132e59..0a861c9 100644
+--- a/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/ACCEPTANCE_CRITERIA.md
++++ b/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/ACCEPTANCE_CRITERIA.md
+@@ -10,3 +10,7 @@
+ | AC-006 | Approved contract versions are identified; unknown/draft versions remain unpinned. | dependency review |
+ | AC-007 | No runtime, hardware or release readiness is claimed. | documentation review |
+ | AC-008 | Owner dispositions and immutable review evidence are recorded. | PR record |
++| AC-009 | The first-release scope is contract-first and every dependency is traceable to a pinned APPROVED contract (Sense 0.1.0, commit 543f574); Mind, Motion, Skill, Sim and Control Plane are recorded as excluded. | dependency review |
++| AC-010 | Explicit exclusions are documented: no Core client, no network or HTTP implementation, no ROS 2 or simulator adapter in the first release. | API review |
++| AC-011 | Scope or acceptance changes to KOS-SDK-001..009 are mirrored by a reviewed kritva-program change. | program PR record |
++| AC-012 | The project owner approves the public API and architecture. | owner approval |
+diff --git a/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/TASK.md b/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/TASK.md
+index 8809e75..391656a 100644
+--- a/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/TASK.md
++++ b/planning/milestones/V2-M1-SDK-001/tasks/KOS-SDK-001/TASK.md
+@@ -8,6 +8,8 @@ In scope: architecture, API namespace/client proposal, sync/async principles, er
+ 
+ Out of scope: runtime implementation, Control Plane service, upstream contract changes, mandatory ROS 2 and C++ SDK.
+ 
++Revised 2026-11-24: first-release scope is a contract-first library (Sense 0.1.0); network clients and transport are deferred (ADR-003).
++
+ Deliverables: reviewed ARCHITECTURE.md, REQUIREMENTS.md and API.md; owner decision/open-question register; upstream contract dependency map.
+ 
+ DoD: task criteria reviewed, PR merged, immutable evidence and review record retained.
+diff --git a/planning/milestones/V2-M2-SDK-001/MILESTONE.md b/planning/milestones/V2-M2-SDK-001/MILESTONE.md
+index 7ad9fcd..789ded9 100644
+--- a/planning/milestones/V2-M2-SDK-001/MILESTONE.md
++++ b/planning/milestones/V2-M2-SDK-001/MILESTONE.md
+@@ -2,6 +2,6 @@
+ 
+ Status: PROPOSED / PLANNING_ONLY. Program alignment: V2-M2 P2 BUILD & ARTIFACT. Tasks: KOS-SDK-002, KOS-SDK-003.
+ 
+-Outcome: installable Python package with reproducible build metadata, core client foundation and explicit contract compatibility.
++Outcome: installable Python package with reproducible build metadata, configuration, Sense model foundation and explicit contract compatibility.
+ 
+ Exit: clean install, reproducible artifact, version policy, client/configuration/lifecycle tests, compatibility declarations and required gates passing on exact commits.
+diff --git a/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/ACCEPTANCE_CRITERIA.md b/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/ACCEPTANCE_CRITERIA.md
+index 01b5fbe..db56d86 100644
+--- a/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/ACCEPTANCE_CRITERIA.md
++++ b/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/ACCEPTANCE_CRITERIA.md
+@@ -2,10 +2,10 @@
+ 
+ | ID | Criterion | Verification |
+ |---|---|---|
+-| AC-001 | Client configuration is explicit, validated and documented. | unit tests |
+-| AC-002 | Client lifecycle supports deterministic close/cleanup. | lifecycle tests |
+-| AC-003 | Errors preserve upstream codes and do not expose secrets. | error/security tests |
+-| AC-004 | Compatibility declarations identify supported contract versions. | compatibility tests |
+-| AC-005 | Unsupported versions fail clearly before operation. | negative tests |
+-| AC-006 | Async timeout and cancellation semantics are tested. | async tests |
+-| AC-007 | Base import is independent of optional integrations. | clean import |
++| AC-001 | Configuration is explicit, immutable, validated and documented. | unit tests |
++| AC-002 | Errors preserve upstream codes and do not expose secrets. | error/security tests |
++| AC-003 | Compatibility declarations identify supported contract versions; unsupported versions fail clearly before any operation. | compatibility and negative tests |
++| AC-004 | Vendored schemas carry provenance (repo, path, version, tag, commit SHA, checksum, approval status) and a CI drift check detects divergence from the pinned upstream. | drift check |
++| AC-005 | Sense models round-trip and validate identically to the normative JSON Schema, including units, timestamps, frames, `validity` and `error_code` rules, and unknown-field rejection. | conformance tests |
++| AC-006 | Base import is independent of ROS 2, simulator, hardware and network libraries. | clean import |
++| AC-007 | No Core client, transport or unapproved contract is included. | design review |
+diff --git a/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/TASK.md b/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/TASK.md
+index 0e3ed88..bced167 100644
+--- a/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/TASK.md
++++ b/planning/milestones/V2-M2-SDK-001/tasks/KOS-SDK-003/TASK.md
+@@ -1,11 +1,11 @@
+-# KOS-SDK-003 — Implement Core Client, Configuration and Contract Compatibility
++# KOS-SDK-003 — Implement Configuration, Contract Compatibility and Sense Models
+ 
+-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M2-SDK-001.
++Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M2-SDK-001. Rescoped 2026-11-24: the Core client was removed because Core R1.0 has no Python or network surface.
+ 
+-Objective: implement base client, explicit configuration/lifecycle, typed errors and upstream contract compatibility foundation.
++Objective: implement explicit configuration, typed errors, contract-version compatibility declarations and typed Sense 0.1.0 models and validation over vendored, pinned schemas.
+ 
+-In scope: client construction, configuration validation, lifecycle, error model, compatibility declarations and unit/contract tests.
++In scope: configuration validation, error model preserving upstream codes, supported-contract declarations, vendored schema snapshots with provenance and a drift check, hand-written Sense models, conformance and negative tests.
+ 
+-Out of scope: endpoint-specific Control Plane operations, capability business logic, robot safety and transport leakage.
++Out of scope: any network client or transport, Core, Control Plane, Mind, Motion, Skill and Sim adapters, capability business logic, robot safety.
+ 
+-Dependencies: SDK-001/002 and approved Core contract versions.
++Dependencies: SDK-001 and SDK-002 approval; Sense contract 0.1.0 (APPROVED) at tag `v0.2.0`, commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`.
