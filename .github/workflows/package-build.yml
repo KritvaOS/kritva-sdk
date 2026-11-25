@@ -1,0 +1,28 @@
+# package-build.yml: unit tests and packaging tests for the kritva-sdk package (KOS-SDK-002, AC-001..006).
+name: package-build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  package-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests
+        run: make test-unit
+      - name: Packaging tests (hash-pinned build, clean-venv install, reproducibility)
+        run: make packaging-test

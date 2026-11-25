@@ -30,9 +30,9 @@ Flow: payload -> contract-version check (`UNSUPPORTED_CONTRACT_VERSION` fails fi
 
 ## Target package layout (SDK-002 onward)
 ```text
-sdk/python/
-  pyproject.toml
-  src/kritva_sdk/
+pyproject.toml
+release/              # pinned build requirements, sdist normaliser
+src/kritva_sdk/
     __init__.py
     config.py
     errors.py
@@ -58,4 +58,4 @@ Directories are introduced with their first real deliverable. Motion, Mind and S
 SDK package SemVer is independent of upstream contract versions. Each adapter declares supported contract versions and rejects unsupported versions clearly. Breaking public API changes require a MAJOR version, migration notes and regression evidence.
 
 ## Open decisions for SDK-001
-Reuse of the kritva-sense reference validator versus an SDK validator; handling of the Sense stream and frame-graph contracts; Python version matrix and validation library; PyPI availability of `kritva-sdk`; the first network surface (Control Plane or a Community runtime API) and when it is approved; optional ROS 2 and simulator adapters. Resolved in this design: namespace `kritva_sdk`, vendored pinned schemas, hand-written models, transport deferred.
+Resolved: reuse of the kritva-sense validator (oracle only, no runtime dependency), Python 3.12+, Sense stream and frame-graph scope (later increment under SDK-005), namespace `kritva_sdk`, vendored pinned schemas, hand-written models, transport deferred. Still open: PyPI availability of `kritva-sdk`; the first network surface (Control Plane or a Community runtime API) and when it is approved; optional ROS 2 and simulator adapters.

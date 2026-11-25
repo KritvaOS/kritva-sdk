@@ -9,3 +9,4 @@
 | AC-005 | Sense models round-trip and validate identically to the normative JSON Schema, including units, timestamps, frames, `validity` and `error_code` rules, and unknown-field rejection. | conformance tests |
 | AC-006 | Base import is independent of ROS 2, simulator, hardware and network libraries. | clean import |
 | AC-007 | No Core client, transport or unapproved contract is included. | design review |
+| AC-008 | Cross-validation tests run the pinned kritva-sense validator, generator and conformance harness as oracles and show the SDK does not diverge semantically; the SDK has no runtime dependency on kritva-sense. | cross-validation tests |
