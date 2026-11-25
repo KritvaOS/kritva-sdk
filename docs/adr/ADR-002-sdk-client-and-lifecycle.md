@@ -1,14 +1,12 @@
-# ADR-002 — Client Model and Lifecycle
+# ADR-002 — Library Lifecycle, Configuration and Errors
 
-Status: PROPOSED. To be finalized in KOS-SDK-001.
+Status: PROPOSED. Revised 2026-11-24 for the contract-first first release.
 
 ## Proposal
-- Async-first public API, with synchronous convenience wrappers over it.
-- A client is created from explicit configuration, used as an async context manager, and closed deterministically.
-- Timeout, cancellation and cleanup behavior is documented per call; errors are typed and deterministic.
-- Authentication is injected through a boundary the SDK does not own. Client-side validation never replaces server authorization or safety checks.
+- The first release is a pure library: no connections, sessions or background tasks, so no client lifecycle exists yet.
+- Configuration is explicit, validated and immutable. There is no implicit global state and no environment-variable magic in the base import.
+- Errors are typed and deterministic and preserve upstream error codes (for example `UNSUPPORTED_CONTRACT_VERSION`). Error text never includes secrets.
+- Validation is synchronous and pure. Timeout and cancellation semantics are specified when a network surface is approved.
 
-## Open questions
-- Retry and idempotency policy per operation class.
-- Configuration sources and precedence.
-- Thread and event-loop rules for the synchronous wrappers.
+## Deferred
+When a client is introduced: async-first with synchronous convenience wrappers, async context manager with deterministic close, authentication injected through a boundary the SDK does not own, retry and idempotency per operation class.

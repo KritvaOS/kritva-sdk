@@ -6,7 +6,7 @@
 | ID | Requirement | Verification |
 |---|---|---|
 | SDK-F-001 | Provide a documented Python package and stable import namespace. | package/import tests |
-| SDK-F-002 | Provide explicit client configuration and lifecycle. | unit tests |
+| SDK-F-002 | Provide explicit, immutable configuration; client lifecycle applies only once a network client exists. | unit tests |
 | SDK-F-003 | Expose typed, version-aware interfaces for approved Kritva APIs. | contract tests |
 | SDK-F-004 | Map upstream errors without losing source codes/context. | error tests |
 | SDK-F-005 | Define bounded timeout and cancellation behavior for async operations. | async tests |

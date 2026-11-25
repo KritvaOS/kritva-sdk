@@ -6,7 +6,7 @@
 |---|---|---|---|---|
 | KOS-SDK-001 | Define Python-first SDK architecture and developer API | V2-M1-SDK-001 | PROPOSED | capability contract review |
 | KOS-SDK-002 | Establish Python package foundation and reproducible build | V2-M2-SDK-001 | PROPOSED | SDK-001 approval |
-| KOS-SDK-003 | Implement core client, configuration and contract compatibility | V2-M2-SDK-001 | PROPOSED | SDK-001/002; Core contracts |
+| KOS-SDK-003 | Implement configuration, contract compatibility and Sense models | V2-M2-SDK-001 | PROPOSED | SDK-001/002; Sense 0.1.0 (APPROVED) |
 | KOS-SDK-004 | Define and implement Control Plane client adapter | V2-M3-SDK-001 | PROPOSED | approved Control Plane API/security |
 | KOS-SDK-005 | Implement Sense API adapter | V2-M3-SDK-001 | PROPOSED | Sense 0.1.0 (APPROVED); SDK-003 |
 | KOS-SDK-006 | Add simulation adapter and executable examples | V2-M5-SDK-001 | PROPOSED | approved simulation contract |

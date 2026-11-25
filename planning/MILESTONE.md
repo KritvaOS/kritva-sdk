@@ -6,7 +6,7 @@
 |---|---|---|
 | V2-M0 | Governance baseline | Adopt repository governance and acceptance structure; not a claim of central M0 closure |
 | V2-M1 | V2-M1-SDK-001 | Local planning label only: Python-first architecture and developer API reviewed. No M1 progress is claimed until the program decides SDK ownership (a V2-M2 exit condition) |
-| V2-M2 | V2-M2-SDK-001 | Python package, reproducible build, core client and compatibility |
+| V2-M2 | V2-M2-SDK-001 | Python package, reproducible build, configuration, contract compatibility and Sense models |
 | V2-M3 | V2-M3-SDK-001 | Control Plane and capability API adapters |
 | V2-M5 | V2-M5-SDK-001 | Simulation adapter and reproducible examples |
 | V2-M7 | V2-M7-SDK-001 | Telemetry, events and execution results |
