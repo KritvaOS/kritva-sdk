@@ -8,6 +8,8 @@ In scope: architecture, API namespace/client proposal, sync/async principles, er
 
 Out of scope: runtime implementation, Control Plane service, upstream contract changes, mandatory ROS 2 and C++ SDK.
 
+Revised 2026-11-24: first-release scope is a contract-first library (Sense 0.1.0); network clients and transport are deferred (ADR-003).
+
 Deliverables: reviewed ARCHITECTURE.md, REQUIREMENTS.md and API.md; owner decision/open-question register; upstream contract dependency map.
 
 DoD: task criteria reviewed, PR merged, immutable evidence and review record retained.

@@ -4,7 +4,7 @@
 
 | Level | Purpose |
 |---|---|
-| Unit | Config, models, errors and client lifecycle |
+| Unit | Config, models, errors and compatibility checks (client lifecycle when a client exists) |
 | Contract | Upstream schemas, versions and error mapping |
 | Integration | Actual service boundaries and transport behavior |
 | Regression | Preserve accepted API and behavior guarantees |
