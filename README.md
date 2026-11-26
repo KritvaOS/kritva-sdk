@@ -70,7 +70,7 @@ The local plan maps to V2-M1, M2, M3, M5, M7 and M8. V2-M4 is not a direct SDK d
 
 **Status report.** [status/status.json](status/status.json) (schema 2.0, [status/README.md](status/README.md)) reports facts only. Its `tasks` list is empty because no SDK task is baselined: KOS-SDK-001 to KOS-SDK-009 are planning inventory in [planning/TASKS.md](planning/TASKS.md), carry no weight in the baseline and earn no program credit. kritva-program decides baseline, weights, approvals and gates.
 
-**Implementation maturity is separate from program acceptance.** The package foundation (KOS-SDK-002: `src/kritva_sdk/`, `pyproject.toml`, the pinned reproducible build and the unit and packaging tests) is implemented and merged. It is planning-only, not baselined and not accepted. The SDK has no contract models, validators, network client, CLI or release yet; no runtime API, adapter or release is claimed as implemented.
+**Implementation maturity is separate from program acceptance.** The package foundation (KOS-SDK-002: `src/kritva_sdk/`, `pyproject.toml`, the pinned reproducible build and the unit and packaging tests) is implemented and merged. It is planning-only, not baselined and not accepted. KOS-SDK-003 is in progress in stages (also planning-only): typed errors, contract compatibility, a minimal configuration, the vendored Sense 0.1.0 contract files and a hand-written, context-free Sense sample validator with typed models exist, but conformance evidence against the upstream fixtures and reference validator (stage d) is not yet in the repository. The SDK has no network client, CLI or release yet; freshness and sequence checks are not implemented; no runtime API, adapter or release is claimed as stable or accepted.
 
 | Dimension | Source record | Authority |
 |---|---|---|
@@ -97,7 +97,7 @@ Tasks are listed in [planning/TASKS.md](planning/TASKS.md). Each has a TASK.md a
 
 ## Build, Test, Regression and Validation
 
-The strategy is in [TESTING.md](TESTING.md). Today `make test-unit` runs the package unit tests, `make packaging-test` builds the wheel and source distribution in a hash-pinned environment and installs each into a clean virtual environment, and the README, commit-message, progress and vendored-schema drift checks run (`make preflight`; `make schema-drift` verifies the pinned Sense files against `src/kritva_sdk/_schemas/sense/PROVENANCE.json`). The engineering gates `check`, `lint`, `docs-check`, `test-integration`, `test-regression` and `acceptance` are still NOT_IMPLEMENTED. No tests of SDK contract behavior exist yet. Simulation evidence is never physical or safety validation.
+The strategy is in [TESTING.md](TESTING.md). Today `make test-unit` runs the package unit tests, `make packaging-test` builds the wheel and source distribution in a hash-pinned environment and installs each into a clean virtual environment, and the README, commit-message, progress and vendored-schema drift checks run (`make preflight`; `make schema-drift` verifies the pinned Sense files against `src/kritva_sdk/_schemas/sense/PROVENANCE.json`). The engineering gates `check`, `lint`, `docs-check`, `test-integration`, `test-regression` and `acceptance` are still NOT_IMPLEMENTED. Unit tests of the Sense models and validator exist; upstream cross-validation arrives in stage d. Simulation evidence is never physical or safety validation.
 
 ## Git Workflow and Review
 

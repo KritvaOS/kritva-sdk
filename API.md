@@ -38,6 +38,9 @@ Models are hand-written and typed. The vendored JSON Schema stays normative; con
 
 - Units, timestamps (`clock`, `unit`, `value`), frame identifiers, `validity` and `error_code` semantics are preserved exactly as the contract defines them; no conversion is hidden.
 - Unknown fields are rejected, as the contract requires. Unsupported contract versions fail clearly and early.
+- `validate_sample(payload)` returns a tuple of `Violation(path, code, message)` sorted by (path, code, message); an empty tuple means structural conformance only. It never raises for malformed input. `parse_sample(payload)` returns a frozen `SenseSample` or raises `ContractError` (all violations) and, for an unsupported `contract_version` string, `UnsupportedContractVersion` before any other validation is attempted.
+- Freshness (`STALE_DATA` from age, clock mismatch, future samples), sequence continuity (`SEQUENCE_REGRESSION`) and the consumer usability decision need the consumer's context (contract section 6.1) and are not implemented by this SDK release. A conformant sample is not thereby fresh, in order or usable.
+- `MISSING` samples carry empty measurements; `STALE` and `INVALID` samples keep the last known measurements for diagnosis, and they are not readings. `error_code` is `None` on the model exactly when the field is absent on the wire.
 - Validation is synchronous and pure (no I/O); it is safe to call from async code. No timeout or cancellation semantics are needed until a network surface exists.
 - The base import has no dependency on ROS 2, a simulator, hardware or a network library.
 - Client-side validation never replaces server-side authorization or safety checks. Nothing here makes a real-time or physical-safety claim.
