@@ -8,7 +8,7 @@ check lint test-integration test-regression test docs-check acceptance:
 # "make preflight" runs the CI checks that exist today before a push. It keeps going after a failure and fixes nothing.
 # Engineering gates (check, test-*, docs-check, acceptance) stay NOT_IMPLEMENTED and are deliberately not part of preflight.
 # Not mirrored: secret-scan (gitleaks) and the PR gate's remote rules. PREFLIGHT_BASE is compared with HEAD; run "git fetch origin" first.
-.PHONY: preflight preflight-commits check-readme readme-test progress-check schema-drift hooks-install preflight-hook-on preflight-hook-off
+.PHONY: preflight preflight-commits check-readme readme-test progress-check schema-drift conformance-test hooks-install preflight-hook-on preflight-hook-off
 
 PREFLIGHT_BASE ?= origin/main
 PREFLIGHT_STEPS := check-readme readme-test progress-check schema-drift preflight-commits
@@ -24,6 +24,9 @@ progress-check: ## Check status/STATUS.md against its pinned program snapshot (s
 
 schema-drift: ## Check the vendored Sense contract files against PROVENANCE.json (offline; same as the schema-drift workflow)
 	@python3 scripts/check_schema_drift.py
+
+conformance-test: ## Cross-validate against the pinned kritva-sense oracle (set KRITVA_SENSE_ORACLE; KRITVA_REQUIRE_ORACLE=1 makes absence a failure)
+	python3 -m unittest discover -s tests/conformance -v
 
 preflight:
 	@fail=""; \

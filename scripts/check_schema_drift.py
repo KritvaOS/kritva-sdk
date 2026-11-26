@@ -1,6 +1,8 @@
 """Checks the vendored Sense contract files against their recorded provenance (KOS-SDK-003, AC-004). Stdlib only.
 
-    python3 scripts/check_schema_drift.py                  offline: every vendored file matches its recorded SHA-256
+    python3 scripts/check_schema_drift.py                  offline: every vendored file (the schema and prose contract
+                                                           under src/, the test fixtures under tests/data/sense) matches
+                                                           its recorded SHA-256
     python3 scripts/check_schema_drift.py --upstream DIR   also: DIR is a kritva-sense checkout at exactly the recorded
                                                            commit and holds byte-identical files
 
@@ -17,6 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "src" / "kritva_sdk" / "_schemas" / "sense"
+FIXTURES = ROOT / "tests" / "data" / "sense"
 REQUIRED = ("file", "upstream_repo", "upstream_path", "contract", "contract_version", "tag", "commit", "sha256",
             "license", "approval_status", "decision_ref", "role")
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
@@ -56,9 +59,10 @@ def check_offline(vendor):
             problems.append(f"{name}: vendored file missing")
         elif sha256(path.read_bytes()) != e.get("sha256"):
             problems.append(f"{name}: DRIFT, content does not match the recorded sha256")
-    for p in sorted(vendor.iterdir()):
-        if p.name != "PROVENANCE.json" and p.name not in listed and not p.name.startswith(("__", ".")):
-            problems.append(f"{p.name}: vendored file has no provenance entry")
+    for p in sorted(q for q in vendor.rglob("*") if q.is_file() and "__pycache__" not in q.parts):
+        rel = p.relative_to(vendor).as_posix()
+        if rel != "PROVENANCE.json" and rel not in listed and not p.name.startswith("."):
+            problems.append(f"{rel}: vendored file has no provenance entry")
     if len({(e.get("commit"), e.get("tag")) for e in entries}) > 1:
         problems.append("files record different tags or commits")
     return problems, prov
@@ -92,15 +96,17 @@ def check_upstream(vendor, prov, upstream):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--upstream", metavar="DIR", help="kritva-sense checkout at the recorded commit")
-    ap.add_argument("--vendor-dir", metavar="DIR", default=str(VENDOR), help=argparse.SUPPRESS)
+    ap.add_argument("--vendor-dir", metavar="DIR", default=None, help=argparse.SUPPRESS)
     try:
         args = ap.parse_args(argv)
     except SystemExit as exc:
         return 2 if exc.code else 0
-    vendor = Path(args.vendor_dir)
-    problems, prov = check_offline(vendor)
-    if prov is not None and args.upstream:
-        problems += check_upstream(vendor, prov, Path(args.upstream))
+    problems = []
+    for vendor in ([Path(args.vendor_dir)] if args.vendor_dir else [VENDOR, FIXTURES]):
+        found, prov = check_offline(vendor)
+        problems += found
+        if prov is not None and args.upstream:
+            problems += check_upstream(vendor, prov, Path(args.upstream))
     for p in problems:
         print(f"schema-drift: {p}")
     if problems:

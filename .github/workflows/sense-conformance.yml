@@ -1,0 +1,53 @@
+#==============================================================================
+# Copyright (c) 2026 Kritva Robotics Private Limited.
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : sense-conformance.yml
+# Description : GitHub Actions cross-validation of kritva_sdk.sense against the pinned kritva-sense oracle
+#
+# Component   : Infrastructure
+# Module      : Contract Conformance
+# Layer       : Development Infrastructure
+#
+# Requirements: KOS-SDK-003 AC-005, AC-008
+# API         : GitHub Actions workflow
+#
+# Author      : KritvaOS
+# Created     : 26-11-2026
+#==============================================================================
+
+# sense-conformance.yml: runs the vendored upstream fixtures and the oracle comparison. kritva-sense is checked out at
+# the exact pinned commit and is a test-only oracle: the SDK never depends on it at runtime. An unavailable oracle is a
+# failure (KRITVA_REQUIRE_ORACLE=1), never a skip.
+name: sense-conformance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  sense-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      KRITVA_REQUIRE_ORACLE: "1"
+      KRITVA_SENSE_ORACLE: ${{ github.workspace }}/upstream-sense
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Check out kritva-sense at the exact pinned commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: KritvaOS/kritva-sense
+          ref: 543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77
+          path: upstream-sense
+      - name: Vendored fixtures and unit tests
+        run: make test-unit
+      - name: Oracle cross-validation
+        run: make conformance-test
