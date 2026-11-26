@@ -13,7 +13,7 @@ class PackageFoundationTest(unittest.TestCase):
     def test_version_is_pep440_and_exported(self):
         mod = importlib.import_module("kritva_sdk")
         self.assertRegex(mod.__version__, r"^\d+\.\d+\.\d+(\.dev\d+)?$")
-        self.assertEqual(mod.__all__, ["__version__"])
+        self.assertEqual(mod.__all__, ["SdkConfig", "__version__", "supported_contracts"])
 
     def test_base_import_pulls_no_forbidden_modules(self):
         importlib.import_module("kritva_sdk")
