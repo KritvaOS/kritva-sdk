@@ -1,6 +1,6 @@
 # KOS-SDK-006 — Add Simulation Adapter and Executable Application Examples
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M5-SDK-001.
+Status: APPROVED_PLAN, NOT_STARTED (D-153); conditional on its upstream contracts; not accepted; no credit. Milestone: V2-M5-SDK-001.
 
 Objective: enable reproducible SDK examples against an approved simulation interface.
 

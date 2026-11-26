@@ -1,6 +1,6 @@
 # KOS-SDK-003 — Implement Configuration, Contract Compatibility and Sense Models
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M2-SDK-001. Rescoped 2026-11-24: the Core client was removed because Core R1.0 has no Python or network surface.
+Status: COMPLETE in this repository; owner decision to accept 2026-11-26 (interim D-047, not independent); program acceptance, baseline and approval record pending; no credit. Milestone: V2-M2-SDK-001. Rescoped 2026-11-24: the Core client was removed because Core R1.0 has no Python or network surface.
 
 Objective: implement explicit configuration, typed errors, contract-version compatibility declarations and typed Sense 0.1.0 models and validation over vendored, pinned schemas.
 

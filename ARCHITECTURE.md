@@ -1,6 +1,6 @@
 # Kritva SDK Architecture
 
-**Status:** PROPOSED — review required before implementation.
+**Status:** APPROVED by the owner (SDK-001, D-150; interim D-047, not independent). Implementation proceeds by task; later adapters remain conditional on their upstream contracts.
 
 ## Purpose and position
 Kritva SDK is a contract-first Python library for approved Kritva contracts: typed models, validators, compatibility declarations and (later) clients. It is not a second runtime, service, orchestration engine or contract authority. The first release contains no network client, because no approved service API exists (Core R1.0 is an in-process C++ API; Control Plane and Sim are NOT_AVAILABLE).

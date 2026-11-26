@@ -1,6 +1,6 @@
 # KOS-SDK-001 — Define Python-First SDK Architecture and Developer API
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M1-SDK-001.
+Status: COMPLETE in this repository; owner decision to accept 2026-11-26 (interim D-047, not independent); program acceptance, baseline and approval record pending; no credit. Milestone: V2-M1-SDK-001.
 
 Objective: define SDK purpose, ownership boundaries, Python-first package strategy, candidate public API, lifecycle and integration boundaries before implementation.
 

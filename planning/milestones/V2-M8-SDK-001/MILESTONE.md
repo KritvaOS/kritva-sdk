@@ -1,6 +1,6 @@
 # V2-M8-SDK-001 — Production Readiness
 
-Status: PROPOSED / PLANNING_ONLY. Program alignment: V2-M8 P8 PRODUCTION. Task: KOS-SDK-008.
+Status: APPROVED_PLAN, NOT_STARTED (D-153); milestone not closed. Program alignment: V2-M8 P8 PRODUCTION. Task: KOS-SDK-008.
 
 Outcome: reviewed security, compatibility, packaging, release and recovery evidence.
 

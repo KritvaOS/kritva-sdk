@@ -1,6 +1,6 @@
 # Kritva SDK Public API Design
 
-**Status:** PROPOSED (SDK-001 design, aligned 2026-11-24; owner approval pending). No API below is implemented or stable.
+**Status:** SDK-001 design approved by the owner (D-150; interim D-047, not independent). The configuration, error, compatibility and Sense (`kritva_sdk.sense`) APIs below are implemented by KOS-SDK-003 in a preview, pre-1.0 form and are not stable; everything else is a candidate only.
 
 ## Scope of the first release
 

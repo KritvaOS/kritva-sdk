@@ -1,6 +1,6 @@
 # Kritva SDK Requirements
 
-**Status:** PROPOSED — baseline for SDK-001 review.
+**Status:** APPROVED baseline for the SDK (SDK-001, D-150; interim D-047, not independent). Requirements for KOS-SDK-004 to 009 stay conditional on their upstream contracts.
 
 ## Functional
 | ID | Requirement | Verification |

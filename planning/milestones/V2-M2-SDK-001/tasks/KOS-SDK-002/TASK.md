@@ -1,6 +1,6 @@
 # KOS-SDK-002 — Establish Python Package Foundation and Reproducible Build
 
-Status: PROPOSED / PLANNING_ONLY; owner approved the start on 2026-11-25 (implementation in progress, no credit until acceptance). Milestone: V2-M2-SDK-001. Scope aligned 2026-11-24: package foundation only; contract implementation belongs to KOS-SDK-003.
+Status: COMPLETE in this repository; owner decision to accept 2026-11-26 (interim D-047, not independent); program acceptance, baseline and approval record pending; no credit. Milestone: V2-M2-SDK-001. Scope aligned 2026-11-24: package foundation only; contract implementation belongs to KOS-SDK-003.
 
 Objective: create an installable, typed Python package with controlled dependencies, supported Python versions, version metadata and reproducible artifacts.
 
