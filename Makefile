@@ -8,16 +8,19 @@ check lint test-integration test-regression test docs-check acceptance:
 # "make preflight" runs the CI checks that exist today before a push. It keeps going after a failure and fixes nothing.
 # Engineering gates (check, test-*, docs-check, acceptance) stay NOT_IMPLEMENTED and are deliberately not part of preflight.
 # Not mirrored: secret-scan (gitleaks) and the PR gate's remote rules. PREFLIGHT_BASE is compared with HEAD; run "git fetch origin" first.
-.PHONY: preflight preflight-commits check-readme readme-test hooks-install preflight-hook-on preflight-hook-off
+.PHONY: preflight preflight-commits check-readme readme-test progress-check hooks-install preflight-hook-on preflight-hook-off
 
 PREFLIGHT_BASE ?= origin/main
-PREFLIGHT_STEPS := check-readme readme-test preflight-commits
+PREFLIGHT_STEPS := check-readme readme-test progress-check preflight-commits
 
 check-readme:
 	@python3 scripts/check_readme.py README.md
 
 readme-test:
 	@python3 -m unittest discover -s tests/readme_check -v
+
+progress-check: ## Check status/STATUS.md against its pinned program snapshot (same as the progress-check workflow)
+	@python3 scripts/progress_report.py --check
 
 preflight:
 	@fail=""; \

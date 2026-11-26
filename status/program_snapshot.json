@@ -1,0 +1,211 @@
+{
+  "baseline_tasks": {
+    "accepted_tasks": 0,
+    "baseline_tasks": 0,
+    "rows": 14
+  },
+  "evidence_notes": [],
+  "execution": {
+    "complete": 0,
+    "tasks": 0
+  },
+  "foundation": {
+    "accepted_tasks": 0,
+    "accepted_weight": 0,
+    "tasks": 0,
+    "weight": 0
+  },
+  "milestones": {
+    "M1": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 4,
+      "rows": 1
+    },
+    "M2": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 14,
+      "rows": 3
+    },
+    "M3": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 16,
+      "rows": 3
+    },
+    "M4": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 9,
+      "rows": 2
+    },
+    "M5": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 13,
+      "rows": 3
+    },
+    "M7": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 4,
+      "rows": 1
+    },
+    "M8": {
+      "accepted": 0,
+      "baseline": 0,
+      "point": 6,
+      "rows": 1
+    }
+  },
+  "program": {
+    "baseline_approved": true,
+    "baseline_version": 15,
+    "generated_at": "2026-11-26T01:54:41Z",
+    "release_state": "NOT_READY",
+    "view": "https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md"
+  },
+  "repo": "SDK",
+  "repository": "KritvaOS/kritva-sdk",
+  "schema_version": 2,
+  "tasks": [
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-COMMUNITY-005-01",
+      "kind": "planned",
+      "milestone": "M2",
+      "title": "SDK package and build manifest",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-COMMUNITY-005-02",
+      "kind": "planned",
+      "milestone": "M2",
+      "title": "Clean-environment SDK installation and import tests",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-COMMUNITY-012-01",
+      "kind": "planned",
+      "milestone": "M4",
+      "title": "SDK developer API and CLI",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-COMMUNITY-012-02",
+      "kind": "planned",
+      "milestone": "M4",
+      "title": "SDK examples, documentation and clean-environment tests",
+      "weight": 5
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-COMMUNITY-014-01",
+      "kind": "planned",
+      "milestone": "M5",
+      "title": "SDK job submit, status and cancel integration",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-COMMUNITY-014-02",
+      "kind": "planned",
+      "milestone": "M5",
+      "title": "SDK result retrieval and error handling",
+      "weight": 5
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-001",
+      "kind": "planned",
+      "milestone": "M1",
+      "title": "Architecture and API design",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-003",
+      "kind": "planned",
+      "milestone": "M2",
+      "title": "Configuration, contract compatibility and Sense models",
+      "weight": 6
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-005",
+      "kind": "planned",
+      "milestone": "M3",
+      "title": "Sense API, stream and frame-graph adapters",
+      "weight": 5
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-004",
+      "kind": "planned",
+      "milestone": "M3",
+      "title": "Control Plane client and transport foundation (excludes job operations; conditional on an approved Control Plane API)",
+      "weight": 5
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-009",
+      "kind": "planned",
+      "milestone": "M3",
+      "title": "Motion, Mind and Skill adapters (conditional on approved, tagged component contracts)",
+      "weight": 6
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-006",
+      "kind": "planned",
+      "milestone": "M5",
+      "title": "Simulation adapter only (examples stay with PROPOSED-NEW-COMMUNITY-012-02; conditional on an approved simulation interface)",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-007",
+      "kind": "planned",
+      "milestone": "M7",
+      "title": "Telemetry and event interfaces only (result retrieval stays with PROPOSED-NEW-COMMUNITY-014-02; conditional on an approved telemetry or event contract)",
+      "weight": 4
+    },
+    {
+      "accepted": false,
+      "execution": "NOT_STARTED",
+      "id": "PROPOSED-NEW-SDK-008",
+      "kind": "planned",
+      "milestone": "M8",
+      "title": "Security, compatibility and release readiness",
+      "weight": 6
+    }
+  ],
+  "titles": {
+    "M0": "Foundation",
+    "M1": "Studio",
+    "M2": "Build & Artifact",
+    "M3": "Control Plane",
+    "M4": "Booking & Commercial",
+    "M5": "Execution",
+    "M6": "Lab & Robot",
+    "M7": "Live & Results",
+    "M8": "Production"
+  }
+}
