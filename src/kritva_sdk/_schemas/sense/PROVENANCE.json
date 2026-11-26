@@ -1,0 +1,35 @@
+{
+  "provenance_version": "1",
+  "vendored_by": "KOS-SDK-003",
+  "note": "Byte-exact copies of the pinned upstream files. Never edit by hand; update only by an approved re-pin (new tag and commit, decision reference) and the drift check.",
+  "files": [
+    {
+      "file": "sense-sample.schema.json",
+      "upstream_path": "contract/sense-sample.schema.json",
+      "role": "structural subset schema (not sufficient for conformance)",
+      "sha256": "1f6f0824af55237b0b3e90ddd413ddef8c48e2eb3cd19a7f4244295bd2b9bc6b",
+      "upstream_repo": "KritvaOS/kritva-sense",
+      "contract": "sense",
+      "contract_version": "0.1.0",
+      "tag": "v0.2.0",
+      "commit": "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77",
+      "license": "Apache-2.0",
+      "approval_status": "APPROVED: contract 0.1.0 approved by the owner (interim D-047 review, not independent); KOS-SENSE-001 ACCEPTED (central approval A076)",
+      "decision_ref": "D-150"
+    },
+    {
+      "file": "SENSE_CONTRACT.md",
+      "upstream_path": "contract/SENSE_CONTRACT.md",
+      "role": "normative prose contract",
+      "sha256": "f8935feb9efb10dd482e4b7386239295b2180412dbbcbc177aa7a6f86d75abcf",
+      "upstream_repo": "KritvaOS/kritva-sense",
+      "contract": "sense",
+      "contract_version": "0.1.0",
+      "tag": "v0.2.0",
+      "commit": "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77",
+      "license": "Apache-2.0",
+      "approval_status": "APPROVED: contract 0.1.0 approved by the owner (interim D-047 review, not independent); KOS-SENSE-001 ACCEPTED (central approval A076)",
+      "decision_ref": "D-150"
+    }
+  ]
+}

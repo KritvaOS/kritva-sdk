@@ -29,7 +29,7 @@ packages = ["kritva_sdk"]
 "" = "src"
 
 [tool.setuptools.package-data]
-kritva_sdk = ["py.typed"]
+kritva_sdk = ["py.typed", "_schemas/sense/*.json", "_schemas/sense/*.md"]
 
 [tool.setuptools.dynamic]
 version = { attr = "kritva_sdk._version.__version__" }
