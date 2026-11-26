@@ -1,6 +1,6 @@
 # KOS-SDK-008 — Complete Security, Compatibility and Release Readiness
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M8-SDK-001.
+Status: APPROVED_PLAN, NOT_STARTED (D-153); conditional on its upstream contracts; not accepted; no credit. Milestone: V2-M8-SDK-001.
 
 Objective: prepare a reviewed SDK release with security, compatibility, packaging, documentation and operational evidence.
 

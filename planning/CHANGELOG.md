@@ -39,3 +39,4 @@
 
 ## 2026-11-26 (PyPI name check)
 - Recorded the owner's PyPI check of 2026-11-25: `kritva-sdk` is not currently listed (404 on the Simple and JSON endpoints). It is not reserved and is re-checked before the first release (ADR-001, API.md, ARCHITECTURE.md).
+- 2026-11-26: task dispositions recorded: SDK-001 to 003 complete, acceptance pending; SDK-004 to 009 approved plan, not started (D-153).

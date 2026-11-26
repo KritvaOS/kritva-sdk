@@ -1,6 +1,6 @@
 # V2-M1-SDK-001 — SDK Architecture and API Definition
 
-Status: PROPOSED / PLANNING_ONLY. Program alignment: V2-M1 P1 STUDIO. Task: KOS-SDK-001.
+Status: tasks complete in this repository, program acceptance pending; milestone not closed. Program alignment: V2-M1 P1 STUDIO. Task: KOS-SDK-001.
 
 Outcome: reviewed Python-first architecture and developer API scope.
 

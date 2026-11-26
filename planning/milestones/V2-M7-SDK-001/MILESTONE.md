@@ -1,6 +1,6 @@
 # V2-M7-SDK-001 — Telemetry and Results
 
-Status: PROPOSED / PLANNING_ONLY. Program alignment: V2-M7 P7 LIVE & RESULTS. Task: KOS-SDK-007.
+Status: APPROVED_PLAN, NOT_STARTED (D-153); milestone not closed. Program alignment: V2-M7 P7 LIVE & RESULTS. Task: KOS-SDK-007.
 
 Outcome: SDK exposes approved telemetry, event and execution-result interfaces.
 

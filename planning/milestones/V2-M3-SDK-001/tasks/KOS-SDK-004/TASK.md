@@ -1,6 +1,6 @@
 # KOS-SDK-004 — Define and Implement Control Plane Client Adapter
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M3-SDK-001.
+Status: APPROVED_PLAN, NOT_STARTED (D-153); conditional on its upstream contracts; not accepted; no credit. Milestone: V2-M3-SDK-001.
 
 Objective: provide a typed client for approved Control Plane APIs without owning the service or its authorization policy.
 

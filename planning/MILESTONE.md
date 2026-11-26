@@ -1,6 +1,6 @@
 # Kritva SDK Milestone Plan
 
-**Status:** PROPOSED / PLANNING_ONLY. Local mapping only; not centrally registered.
+**Status:** local mapping; the SDK workstream is registered centrally (D-149) and its planning rows are approved (D-153). V2-M1 and V2-M2 tasks are complete here with program acceptance pending; the rest is approved plan, not started. No milestone is closed.
 
 | Program milestone | Local SDK milestone | Outcome |
 |---|---|---|

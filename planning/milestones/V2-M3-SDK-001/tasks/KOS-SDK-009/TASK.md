@@ -1,6 +1,6 @@
 # KOS-SDK-009 — Motion, Mind and Skill Adapters
 
-Status: PROPOSED / PLANNING_ONLY. Milestone: V2-M3-SDK-001. Split from KOS-SDK-005 on 2026-11-24.
+Status: APPROVED_PLAN, NOT_STARTED (D-153); conditional on its upstream contracts; not accepted; no credit. Milestone: V2-M3-SDK-001. Split from KOS-SDK-005 on 2026-11-24.
 
 Objective: typed Python adapters for the Motion, Mind and Skill contracts, once each is approved and tagged.
 

@@ -1,6 +1,6 @@
 # V2-M2-SDK-001 — Python Package Foundation
 
-Status: PROPOSED / PLANNING_ONLY. Program alignment: V2-M2 P2 BUILD & ARTIFACT. Tasks: KOS-SDK-002, KOS-SDK-003.
+Status: tasks complete in this repository, program acceptance pending; milestone not closed. Program alignment: V2-M2 P2 BUILD & ARTIFACT. Tasks: KOS-SDK-002, KOS-SDK-003.
 
 Outcome: installable Python package with reproducible build metadata, configuration, Sense model foundation and explicit contract compatibility.
 

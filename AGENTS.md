@@ -32,7 +32,7 @@ Use unit, contract, integration and regression tests as appropriate. Simulation 
 
 ## Program governance
 - Follow the Kritva V2 acceptance standard and task-ID convention.
-- Until SDK repository and milestone registration is approved centrally, local tasks remain PROPOSED / PLANNING_ONLY.
+- The SDK workstream is registered centrally (D-149). Local task status never creates credit: KOS-SDK-001 to 003 are complete with program acceptance pending, KOS-SDK-004 to 009 are approved plan scope (D-153), not started.
 - Never modify central baseline, approvals, gate closures, workstreams or generated program views from this repository.
 - A local merge, tag or CI pass does not close a central milestone.
 

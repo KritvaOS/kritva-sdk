@@ -11,9 +11,9 @@
 | GitHub Setting | PUBLIC (observed 2026-11-24) |
 | Lifecycle Status | PLANNING |
 | Repository Owner | Project owner |
-| Architecture | [ARCHITECTURE.md](ARCHITECTURE.md) (PROPOSED) |
-| Milestones | [planning/MILESTONE.md](planning/MILESTONE.md) (PROPOSED) |
-| Tasks | [planning/TASKS.md](planning/TASKS.md) (PROPOSED / PLANNING_ONLY) |
+| Architecture | [ARCHITECTURE.md](ARCHITECTURE.md) (design approved by the owner, D-150) |
+| Milestones | [planning/MILESTONE.md](planning/MILESTONE.md) (local mapping; none closed) |
+| Tasks | [planning/TASKS.md](planning/TASKS.md) (001 to 003 complete, acceptance pending; 004 to 009 approved plan, not started) |
 | Acceptance Criteria | [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md) (PROPOSED) |
 | Status Reporting | [status/status.json](status/status.json) (schema 2.0) and the generated progress view [status/STATUS.md](status/STATUS.md) (see Status Reporting and Program Integration) |
 | License | [LICENSE](LICENSE) (Apache-2.0) |
@@ -62,19 +62,19 @@ No empty source folders or placeholder modules are created before their first de
 
 ## Milestones and Implementation Plan
 
-The local plan maps to V2-M1, M2, M3, M5, M7 and M8. V2-M4 is not a direct SDK deliverable; V2-M6 remains HOLD and no physical integration work is claimed. The central program registers this repository as the `SDK` workstream (kritva-program D-149), with planning rows and weights in the approved plan register (D-153). All local tasks remain PROPOSED / PLANNING_ONLY: none is in the frozen program baseline, and nothing here earns program credit until a task is baselined, approved and accepted.
+The local plan maps to V2-M1, M2, M3, M5, M7 and M8. V2-M4 is not a direct SDK deliverable; V2-M6 remains HOLD and no physical integration work is claimed. The central program registers this repository as the `SDK` workstream (kritva-program D-149), with planning rows and weights in the approved plan register (D-153). KOS-SDK-001 to 003 are complete in this repository and the owner decided on 2026-11-26 to accept them (interim D-047 review, not independent); KOS-SDK-004 to 009 are approved plan scope (D-153), not started. None is in the frozen program baseline yet, and nothing here earns program credit until kritva-program baselines, approves and records a task.
 
 ## Status Reporting and Program Integration
 
 **Progress view.** [status/STATUS.md](status/STATUS.md) is a generated progress view: a bar of accepted weight, with the program's milestone breakdown. `scripts/progress_report.py` renders it from the pinned snapshot `status/program_snapshot.json`, which kritva-program writes (`tools/publish_repo_progress.py`, decision D-120). The `progress-check` workflow runs on pull requests and on pushes to main, runs `python3 scripts/progress_report.py --check` (read-only), and fails when the report and the snapshot differ. The view is a derived snapshot and can lag the program; the record is the [program status view](https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md).
 
-**Status report.** [status/status.json](status/status.json) (schema 2.0, [status/README.md](status/README.md)) reports facts only. Its `tasks` list is empty because no SDK task is baselined: KOS-SDK-001 to KOS-SDK-009 are planning inventory in [planning/TASKS.md](planning/TASKS.md), carry no weight in the baseline and earn no program credit. kritva-program decides baseline, weights, approvals and gates.
+**Status report.** [status/status.json](status/status.json) (schema 2.0, [status/README.md](status/README.md)) reports facts only. Its `tasks` list is empty because no SDK task is baselined: KOS-SDK-001 to KOS-SDK-009 are in [planning/TASKS.md](planning/TASKS.md), carry no weight in the baseline and earn no program credit; status.json will list KOS-SDK-001 to 003 only after kritva-program baselines them. kritva-program decides baseline, weights, approvals and gates.
 
 **Implementation maturity is separate from program acceptance.** The package foundation (KOS-SDK-002: `src/kritva_sdk/`, `pyproject.toml`, the pinned reproducible build and the unit and packaging tests) is implemented and merged. It is planning-only, not baselined and not accepted. KOS-SDK-003 is implemented in four merged stages and is likewise planning-only, not baselined and not accepted: typed errors, contract compatibility, a minimal configuration, the vendored Sense 0.1.0 contract files and a hand-written, context-free Sense sample validator with typed models exist, with upstream fixtures and oracle cross-validation. The SDK has no network client, CLI or release yet; freshness and sequence checks are not implemented; no runtime API, adapter or release is claimed as stable or accepted.
 
 | Dimension | Source record | Authority |
 |---|---|---|
-| Execution | the task status in [planning/TASKS.md](planning/TASKS.md); every task is PROPOSED | The task owner records it |
+| Execution | the task status in [planning/TASKS.md](planning/TASKS.md); 001 to 003 complete (acceptance pending), 004 to 009 approved plan, not started | The task owner records it |
 | Evidence | none recorded in the status source: SDK-002 implementation is in the merged pull request history, not cited as task evidence | Evidence is recorded at acceptance, by the author, and checked by another reviewer |
 | Acceptance | [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md), the review record and the central approvals in kritva-program | The independent reviewer and the owner, never a status report |
 | Release readiness | not defined: no release, tag or completion record exists | The owner, through the central gates |
