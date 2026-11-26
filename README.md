@@ -15,7 +15,7 @@
 | Milestones | [planning/MILESTONE.md](planning/MILESTONE.md) (PROPOSED) |
 | Tasks | [planning/TASKS.md](planning/TASKS.md) (PROPOSED / PLANNING_ONLY) |
 | Acceptance Criteria | [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md) (PROPOSED) |
-| Status Reporting | Pending central SDK workstream registration |
+| Status Reporting | [status/status.json](status/status.json) (schema 2.0) and the generated progress view [status/STATUS.md](status/STATUS.md) (see Status Reporting and Program Integration) |
 | License | [LICENSE](LICENSE) (Apache-2.0) |
 
 ## Purpose and Scope
@@ -62,11 +62,22 @@ No empty source folders or placeholder modules are created before their first de
 
 ## Milestones and Implementation Plan
 
-The local plan maps to V2-M1, M2, M3, M5, M7 and M8. V2-M4 is not a direct SDK deliverable; V2-M6 remains HOLD and no physical integration work is claimed. The central `SDK` workstream currently has no repository assigned and the central milestone plan has no SDK repository rows. All local tasks therefore remain PROPOSED / PLANNING_ONLY, with no weights or program credit, until central registration and approval.
+The local plan maps to V2-M1, M2, M3, M5, M7 and M8. V2-M4 is not a direct SDK deliverable; V2-M6 remains HOLD and no physical integration work is claimed. The central program registers this repository as the `SDK` workstream (kritva-program D-149), with planning rows and weights in the approved plan register (D-153). All local tasks remain PROPOSED / PLANNING_ONLY: none is in the frozen program baseline, and nothing here earns program credit until a task is baselined, approved and accepted.
 
 ## Status Reporting and Program Integration
 
-This baseline establishes planning and governance only. No SDK runtime API, package, adapter or release is claimed as implemented.
+**Progress view.** [status/STATUS.md](status/STATUS.md) is a generated progress view: a bar of accepted weight, with the program's milestone breakdown. `scripts/progress_report.py` renders it from the pinned snapshot `status/program_snapshot.json`, which kritva-program writes (`tools/publish_repo_progress.py`, decision D-120). The `progress-check` workflow runs on pull requests and on pushes to main, runs `python3 scripts/progress_report.py --check` (read-only), and fails when the report and the snapshot differ. The view is a derived snapshot and can lag the program; the record is the [program status view](https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md).
+
+**Status report.** [status/status.json](status/status.json) (schema 2.0, [status/README.md](status/README.md)) reports facts only. Its `tasks` list is empty because no SDK task is baselined: KOS-SDK-001 to KOS-SDK-009 are planning inventory in [planning/TASKS.md](planning/TASKS.md), carry no weight in the baseline and earn no program credit. kritva-program decides baseline, weights, approvals and gates.
+
+**Implementation maturity is separate from program acceptance.** The package foundation (KOS-SDK-002: `src/kritva_sdk/`, `pyproject.toml`, the pinned reproducible build and the unit and packaging tests) is implemented and merged. It is planning-only, not baselined and not accepted. The SDK has no contract models, validators, network client, CLI or release yet; no runtime API, adapter or release is claimed as implemented.
+
+| Dimension | Source record | Authority |
+|---|---|---|
+| Execution | the task status in [planning/TASKS.md](planning/TASKS.md); every task is PROPOSED | The task owner records it |
+| Evidence | none recorded in the status source: SDK-002 implementation is in the merged pull request history, not cited as task evidence | Evidence is recorded at acceptance, by the author, and checked by another reviewer |
+| Acceptance | [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md), the review record and the central approvals in kritva-program | The independent reviewer and the owner, never a status report |
+| Release readiness | not defined: no release, tag or completion record exists | The owner, through the central gates |
 
 ## Architecture
 
@@ -86,7 +97,7 @@ Tasks are listed in [planning/TASKS.md](planning/TASKS.md). Each has a TASK.md a
 
 ## Build, Test, Regression and Validation
 
-No tests of SDK behavior exist yet. The strategy is in [TESTING.md](TESTING.md). Only the README and commit-message checks run today. Simulation evidence is never physical or safety validation.
+The strategy is in [TESTING.md](TESTING.md). Today `make test-unit` runs the package unit tests, `make packaging-test` builds the wheel and source distribution in a hash-pinned environment and installs each into a clean virtual environment, and the README, commit-message and progress checks run (`make preflight`). The engineering gates `check`, `lint`, `docs-check`, `test-integration`, `test-regression` and `acceptance` are still NOT_IMPLEMENTED. No tests of SDK contract behavior exist yet. Simulation evidence is never physical or safety validation.
 
 ## Git Workflow and Review
 

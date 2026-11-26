@@ -14,7 +14,7 @@
 
 V2-M4 has no direct SDK deliverable. V2-M6 remains HOLD; no physical SDK integration is planned. M7 software evidence cannot imply physical readiness.
 
-> Governance note: kritva-program's V2-M2 exit includes "Sim and SDK ownership location decided", and the SDK workstream has no repository assigned. Local M1 work is pre-registration planning and earns no program credit.
+> Governance note: kritva-program's V2-M2 exit includes "Sim and SDK ownership location decided", and the SDK workstream is registered to this repository (D-149). Local milestone work is planning against proposed program milestones and earns no program credit.
 
 ## V2-M1-SDK-001 — Architecture and API
 Task KOS-SDK-001. Exit: Python-first scope, ownership boundaries, candidate public API, lifecycle semantics, contract dependencies and open decisions reviewed. No runtime implementation is implied.

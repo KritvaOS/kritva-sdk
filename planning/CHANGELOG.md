@@ -32,3 +32,7 @@
 - Layout is root-level `src/kritva_sdk/`, matching kritva-sense; docs updated from `sdk/python/`.
 - Implemented: `pyproject.toml` (setuptools==80.9.0), `kritva_sdk` with `__version__ = 0.1.0.dev0`, `py.typed`, hash-pinned build requirements, sdist normaliser, unit and packaging tests.
 - Task status in `planning/TASKS.md` is unchanged here to avoid a kritva-program re-pin before merge; status moves with the program record.
+
+## 2026-11-26 (status reporting)
+- Added `status/` (status.json schema 2.0 with no baselined tasks, schema and checksum, README), the generated progress view from kritva-program's published snapshot, `scripts/progress_report.py`, the `progress-check` workflow and `make progress-check` (in preflight).
+- README now links the status report and states that implementation maturity (SDK-002 merged) is separate from program acceptance; stale "pending central registration" text corrected (D-149, D-153).
