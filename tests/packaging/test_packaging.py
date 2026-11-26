@@ -9,6 +9,7 @@ import hashlib
 import os
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 import venv
@@ -92,6 +93,26 @@ class PackagingTest(unittest.TestCase):
         self.assertIsNone(meta["Requires-Dist"])
         self.assertIn("kritva_sdk/py.typed", names)
         self.assertFalse([n for n in names if n.startswith(("tests/", "planning/", "release/"))])
+
+    VENDORED = ("sense-sample.schema.json", "SENSE_CONTRACT.md", "PROVENANCE.json")
+
+    def test_wheel_and_sdist_contain_vendored_contract_files(self):
+        with zipfile.ZipFile(self.wheel) as z:
+            wnames = set(z.namelist())
+        with tarfile.open(self.sdist) as t:
+            snames = set(t.getnames())
+        for f in self.VENDORED:
+            self.assertIn(f"kritva_sdk/_schemas/sense/{f}", wnames)
+            self.assertTrue(any(n.endswith(f"src/kritva_sdk/_schemas/sense/{f}") for n in snames), f)
+
+    def test_installed_wheel_reads_vendored_files_as_resources(self):
+        py = make_venv(Path(self.tmp.name) / "clean-resources")
+        run([str(py), "-m", "pip", "install", "--no-deps", str(self.wheel)])
+        code = ("import hashlib, json; from importlib.resources import files; "
+                "d = files('kritva_sdk') / '_schemas' / 'sense'; "
+                "prov = json.loads((d / 'PROVENANCE.json').read_text(encoding='utf-8')); "
+                "print(all(hashlib.sha256((d / e['file']).read_bytes()).hexdigest() == e['sha256'] for e in prov['files']))")
+        self.assertEqual(run([str(py), "-I", "-c", code]).stdout.strip(), "True")
 
     def test_two_builds_are_byte_identical(self):
         for pattern in ("*.whl", "*.tar.gz"):

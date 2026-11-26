@@ -1,0 +1,49 @@
+#==============================================================================
+# Copyright (c) 2026 Kritva Robotics Private Limited.
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : schema-drift.yml
+# Description : GitHub Actions check that the vendored Sense contract files match their recorded provenance
+#
+# Component   : Infrastructure
+# Module      : Contract Vendoring
+# Layer       : Development Infrastructure
+#
+# Requirements: KOS-SDK-003 AC-004
+# API         : GitHub Actions workflow
+#
+# Author      : KritvaOS
+# Created     : 26-11-2026
+#==============================================================================
+
+# schema-drift.yml: fails when a vendored file differs from its recorded SHA-256, or from kritva-sense at the
+# exact recorded commit. Runtime installation of the SDK never fetches Sense; this checkout is CI-only.
+name: schema-drift
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  schema-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Offline check against PROVENANCE.json
+        run: python3 scripts/check_schema_drift.py
+      - name: Check out kritva-sense at the exact recorded commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: KritvaOS/kritva-sense
+          ref: 543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77
+          path: upstream-sense
+      - name: Check against the upstream checkout
+        run: python3 scripts/check_schema_drift.py --upstream upstream-sense
