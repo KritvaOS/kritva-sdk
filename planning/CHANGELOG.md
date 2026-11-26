@@ -36,3 +36,6 @@
 ## 2026-11-26 (status reporting)
 - Added `status/` (status.json schema 2.0 with no baselined tasks, schema and checksum, README), the generated progress view from kritva-program's published snapshot, `scripts/progress_report.py`, the `progress-check` workflow and `make progress-check` (in preflight).
 - README now links the status report and states that implementation maturity (SDK-002 merged) is separate from program acceptance; stale "pending central registration" text corrected (D-149, D-153).
+
+## 2026-11-26 (PyPI name check)
+- Recorded the owner's PyPI check of 2026-11-25: `kritva-sdk` is not currently listed (404 on the Simple and JSON endpoints). It is not reserved and is re-checked before the first release (ADR-001, API.md, ARCHITECTURE.md).
