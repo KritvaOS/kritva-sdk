@@ -11,7 +11,7 @@ The first SDK release is a **contract-first Python library**: typed models and v
 - Explicitly excluded until their contracts are approved and versioned: Mind, Motion, Skill, Sim, Control Plane.
 - Explicitly excluded: any Core client (Core R1.0 is an in-process C++ API with no Python or network surface), any HTTP or other network implementation, any ROS 2 or simulator adapter.
 
-Distribution name `kritva-sdk`, import namespace `kritva_sdk` (ADR-001). Availability on PyPI is not yet confirmed.
+Distribution name `kritva-sdk`, import namespace `kritva_sdk` (ADR-001). On 2026-11-25 the name was not listed on PyPI (it is confirmed only when PyPI accepts an upload; ADR-001).
 
 ## Candidate public surface (illustrative, not stable)
 
@@ -54,4 +54,4 @@ A transport abstraction and async clients are deferred until an approved Control
 
 ## Open decisions
 
-PyPI availability of `kritva-sdk` (to be checked directly, ADR-001). Further decisions arise as SDK-002 and SDK-003 are specified.
+Re-check PyPI availability of `kritva-sdk` before the first release (not listed on 2026-11-25; ADR-001). Further decisions arise as SDK-002 and SDK-003 are specified.

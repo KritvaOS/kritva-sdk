@@ -25,5 +25,5 @@ Status: PROPOSED (owner-approved items marked). Local to kritva-sdk; not a centr
 - The central private decisions D-039/D-063 on visibility class were not readable from this repository. This ADR records the owner's decision and does not cite them as satisfied.
 - Hard real-time guarantees are not claimed from Python.
 
-## Open check
-PyPI availability of `kritva-sdk` is unconfirmed and could not be queried from the planning environment. Check it directly (for example `pip index versions kritva-sdk` or the PyPI project page for `kritva-sdk`); a 404 means not currently listed, and final availability is confirmed only when PyPI accepts an upload.
+## Name check
+The owner checked PyPI on 2026-11-25: `pip index versions kritva-sdk` reported no matching distribution, and both `https://pypi.org/simple/kritva-sdk/` and `https://pypi.org/pypi/kritva-sdk/json` returned 404. The name `kritva-sdk` (the same distribution as `kritva_sdk`) is therefore not currently listed on PyPI. This does not reserve it: the name is confirmed only when PyPI accepts an upload, and a name can be taken at any time before the first release. Re-check before the first release; no upload is planned until the acceptance gates pass and the owner approves a release.
