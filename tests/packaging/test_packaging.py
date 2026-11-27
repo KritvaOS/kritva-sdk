@@ -94,7 +94,8 @@ class PackagingTest(unittest.TestCase):
         self.assertIn("kritva_sdk/py.typed", names)
         self.assertFalse([n for n in names if n.startswith(("tests/", "planning/", "release/"))])
 
-    VENDORED = ("sense-sample.schema.json", "SENSE_CONTRACT.md", "PROVENANCE.json")
+    VENDORED = ("sense-sample.schema.json", "SENSE_CONTRACT.md", "stream.schema.json", "STREAM_CONTRACT.md",
+                "frame-transform.schema.json", "FRAME_GRAPH_CONTRACT.md", "PROVENANCE.json")
 
     def test_wheel_and_sdist_contain_vendored_contract_files(self):
         with zipfile.ZipFile(self.wheel) as z:

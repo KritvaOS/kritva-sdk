@@ -25,6 +25,10 @@ def copy_vendor(dst):
     return Path(dst)
 
 
+ALL_VENDORED = ("sense-sample.schema.json", "SENSE_CONTRACT.md", "stream.schema.json", "STREAM_CONTRACT.md",
+                "frame-transform.schema.json", "FRAME_GRAPH_CONTRACT.md")
+
+
 class VendoredFilesTest(unittest.TestCase):
     def test_offline_check_is_clean_on_the_repository(self):
         problems, prov = drift.check_offline(VENDOR)
@@ -33,7 +37,7 @@ class VendoredFilesTest(unittest.TestCase):
 
     def test_provenance_records_the_approved_pin(self):
         prov = json.loads((VENDOR / "PROVENANCE.json").read_text(encoding="utf-8"))
-        self.assertEqual({e["file"] for e in prov["files"]}, {"sense-sample.schema.json", "SENSE_CONTRACT.md"})
+        self.assertEqual({e["file"] for e in prov["files"]}, set(ALL_VENDORED))
         for e in prov["files"]:
             self.assertEqual(e["upstream_repo"], "KritvaOS/kritva-sense")
             self.assertEqual(e["contract_version"], "0.1.0")
@@ -41,6 +45,22 @@ class VendoredFilesTest(unittest.TestCase):
             self.assertEqual(e["commit"], PINNED_COMMIT)
             self.assertIn("APPROVED", e["approval_status"])
             self.assertTrue(e["decision_ref"].startswith("D-"))
+
+    def test_stream_and_frame_graph_contracts_are_pinned_at_the_same_commit(self):
+        prov = json.loads((VENDOR / "PROVENANCE.json").read_text(encoding="utf-8"))
+        by_contract = {}
+        for e in prov["files"]:
+            by_contract.setdefault(e["contract"], []).append(e)
+        self.assertEqual(set(by_contract), {"sense", "stream", "frame_graph"})
+        for name, decision in (("stream", "D-088"), ("frame_graph", "D-085")):
+            self.assertEqual(len(by_contract[name]), 2)
+            for e in by_contract[name]:
+                self.assertEqual(e["decision_ref"], decision)
+                self.assertIn("0.x contract", e["approval_status"])
+        schema = json.loads((VENDOR / "stream.schema.json").read_text(encoding="utf-8"))
+        self.assertIn("0.1.0", json.dumps(schema))
+        schema = json.loads((VENDOR / "frame-transform.schema.json").read_text(encoding="utf-8"))
+        self.assertIn("translation_unit", json.dumps(schema))
 
     def test_package_resources_are_readable_and_match_provenance(self):
         d = files("kritva_sdk") / "_schemas" / "sense"
@@ -116,7 +136,7 @@ class UpstreamDriftTest(unittest.TestCase):
         self.up = t / "up"
         (self.up / "contract").mkdir(parents=True)
         self.git("init", "-q")
-        for n in ("sense-sample.schema.json", "SENSE_CONTRACT.md"):
+        for n in ALL_VENDORED:
             shutil.copy(VENDOR / n, self.up / "contract" / n)
         self.git("add", "-A")
         self.git("commit", "-q", "-m", "pin")

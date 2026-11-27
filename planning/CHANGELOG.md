@@ -1,5 +1,10 @@
 # Planning Changelog
 
+## 2026-11-27 (KOS-SDK-005 start)
+- Owner authorized starting KOS-SDK-005. Plan aligned with the advisory review: four PRs (vendoring, stream adapter, frame-graph adapter, conformance and acceptance).
+- PR1 vendors the stream 0.1.0 and frame graph 0.1.0 contracts and schemas byte-exact from kritva-sense tag v0.2.0 (commit 543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77) with provenance (D-088, D-085). Support is declared in `supported_contracts()` only when each adapter lands, so no version is declared before it is implemented.
+- Corrected the `TASKS.md` header: KOS-SDK-001 to 003 are in baseline v16; KOS-SDK-005 is not in the frozen baseline and earns no credit.
+
 ## 2026-11-27 (status report)
 - kritva-program baselined KOS-SDK-001 to 003 in baseline v16 (D-155; KOS-SDK-002 is one task at weight 8). `status/status.json` now reports them COMPLETE with the CI runs on main commit 645f984. Program acceptance and credit still need the owner's approval record; KOS-SDK-004 to 009 stay approved plans and are not reported.
 

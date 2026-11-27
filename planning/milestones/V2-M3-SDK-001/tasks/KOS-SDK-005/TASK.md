@@ -1,6 +1,6 @@
 # KOS-SDK-005 — Implement Sense API Adapter
 
-Status: APPROVED_PLAN, NOT_STARTED (D-153); conditional on its upstream contracts; not accepted; no credit. Milestone: V2-M3-SDK-001. Narrowed on 2026-11-24; Motion, Mind and Skill moved to KOS-SDK-009.
+Status: IN_PROGRESS from 2026-11-27 on the owner's authorization (approved plan scope, D-153); not in the frozen program baseline; not accepted; no weight or credit. Milestone: V2-M3-SDK-001. Narrowed on 2026-11-24; Motion, Mind and Skill moved to KOS-SDK-009.
 
 Objective: provide typed Python adapters for the approved Sense contracts (sample 0.1.0 is implemented first under SDK-003; this task adds the approved stream 0.1.0 and frame-graph 0.1.0 contracts), preserving Sense ownership and semantics.
 
