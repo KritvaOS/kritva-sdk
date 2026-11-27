@@ -1,5 +1,8 @@
 # Planning Changelog
 
+## 2026-11-27 (status report)
+- kritva-program baselined KOS-SDK-001 to 003 in baseline v16 (D-155; KOS-SDK-002 is one task at weight 8). `status/status.json` now reports them COMPLETE with the CI runs on main commit 645f984. Program acceptance and credit still need the owner's approval record; KOS-SDK-004 to 009 stay approved plans and are not reported.
+
 ## 2026-11-24
 - Initial proposed V2 milestone mapping and eight-task SDK register.
 - Central SDK repository/workstream registration remains pending.

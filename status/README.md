@@ -2,7 +2,7 @@
 
 `status.json` is this repository's task-level report for the program (schema 2.0, `status.schema.json`). It reports facts only; acceptance and credit live in KritvaOS/kritva-program.
 
-`tasks` is empty on purpose: no SDK task is in the approved program baseline. KOS-SDK-001 to KOS-SDK-009 are planning inventory in `planning/TASKS.md` and are not reported here with execution states (kritva-program D-150, D-153). An empty list means "no baselined task to report", not "no implementation": KOS-SDK-002 (package foundation) is implemented and merged in this repository (pull request 5), and it is planning-only, not baselined and not accepted, so it earns no program credit. When a task is baselined, add it here with its execution state and evidence, and reference the CI run and commit.
+`tasks` lists KOS-SDK-001, KOS-SDK-002 and KOS-SDK-003, the SDK tasks in the approved program baseline (kritva-program baseline v16, D-155). Each is reported COMPLETE with the CI runs on the closing commit (the merge of pull request 14, which implemented the required local gates). COMPLETE is this repository's execution report only: acceptance and credit need the owner's approval record in kritva-program, and the 15 manual acceptance criteria are listed by `make acceptance`, never reported as passed by a script. KOS-SDK-004 to KOS-SDK-009 are approved plans (D-153), NOT_STARTED, not baselined, and are not reported here.
 
 The program treats a report older than 14 days as stale. Update `updated_at` and `source.commit` when this file changes.
 
