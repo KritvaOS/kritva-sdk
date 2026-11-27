@@ -1,6 +1,6 @@
 {
   "provenance_version": "1",
-  "vendored_by": "KOS-SDK-003",
+  "vendored_by": "KOS-SDK-003 (sample contract); KOS-SDK-005 (stream and frame graph contracts)",
   "note": "Byte-exact copies of the pinned upstream files. Never edit by hand; update only by an approved re-pin (new tag and commit, decision reference) and the drift check.",
   "files": [
     {
@@ -30,6 +30,62 @@
       "license": "Apache-2.0",
       "approval_status": "APPROVED: contract 0.1.0 approved by the owner (interim D-047 review, not independent); KOS-SENSE-001 ACCEPTED (central approval A076)",
       "decision_ref": "D-150"
+    },
+    {
+      "file": "stream.schema.json",
+      "upstream_path": "contract/stream.schema.json",
+      "role": "structural subset schema of the three stream record kinds (not sufficient for conformance)",
+      "sha256": "12f2003ab9144d820ea6f8aeb629e85fcbc888c6933c60060dd49162fee0ff51",
+      "upstream_repo": "KritvaOS/kritva-sense",
+      "contract": "stream",
+      "contract_version": "0.1.0",
+      "tag": "v0.2.0",
+      "commit": "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77",
+      "license": "Apache-2.0",
+      "approval_status": "APPROVED as stream contract v0.1.0 by the owner (program decision D-088); KOS-SENSE-005 ACCEPTED; a 0.x contract that may still change",
+      "decision_ref": "D-088"
+    },
+    {
+      "file": "STREAM_CONTRACT.md",
+      "upstream_path": "contract/STREAM_CONTRACT.md",
+      "role": "normative prose contract",
+      "sha256": "ac6aafea196224509a673c6f4e71c6a983575a24b816cb794669b17e1ff62bf4",
+      "upstream_repo": "KritvaOS/kritva-sense",
+      "contract": "stream",
+      "contract_version": "0.1.0",
+      "tag": "v0.2.0",
+      "commit": "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77",
+      "license": "Apache-2.0",
+      "approval_status": "APPROVED as stream contract v0.1.0 by the owner (program decision D-088); KOS-SENSE-005 ACCEPTED; a 0.x contract that may still change",
+      "decision_ref": "D-088"
+    },
+    {
+      "file": "frame-transform.schema.json",
+      "upstream_path": "contract/frame-transform.schema.json",
+      "role": "structural schema of one transform record (not sufficient for conformance)",
+      "sha256": "ae644360dc5ba0e679a9e616022b4261b2e95fe967da8af1e4d440f718a099e2",
+      "upstream_repo": "KritvaOS/kritva-sense",
+      "contract": "frame_graph",
+      "contract_version": "0.1.0",
+      "tag": "v0.2.0",
+      "commit": "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77",
+      "license": "Apache-2.0",
+      "approval_status": "APPROVED as frame graph contract v0.1.0 by the owner (program decision D-085); KOS-SENSE-003 ACCEPTED; a 0.x contract that may still change",
+      "decision_ref": "D-085"
+    },
+    {
+      "file": "FRAME_GRAPH_CONTRACT.md",
+      "upstream_path": "contract/FRAME_GRAPH_CONTRACT.md",
+      "role": "normative prose contract",
+      "sha256": "a3ded6d06222a7f554127c16265e718f350eef58f0550737be425561c6f10210",
+      "upstream_repo": "KritvaOS/kritva-sense",
+      "contract": "frame_graph",
+      "contract_version": "0.1.0",
+      "tag": "v0.2.0",
+      "commit": "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77",
+      "license": "Apache-2.0",
+      "approval_status": "APPROVED as frame graph contract v0.1.0 by the owner (program decision D-085); KOS-SENSE-003 ACCEPTED; a 0.x contract that may still change",
+      "decision_ref": "D-085"
     }
   ]
 }
