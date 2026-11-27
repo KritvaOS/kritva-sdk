@@ -24,16 +24,16 @@ Consume approved versioned contracts from kritva-core, -sense, -motion, -mind, -
 SDK SemVer and upstream contract versions are independent. Breaking SDK changes require MAJOR version, migration notes and regression evidence. No ABI or hard real-time guarantee applies to Python.
 
 ## 5. Test gates
-| Gate | Command | Initial state |
+| Gate | Command | State |
 |---|---|---|
-| Structure | make check | NOT_IMPLEMENTED |
-| Lint | make lint | NOT_IMPLEMENTED |
-| Unit | make test-unit | NOT_IMPLEMENTED |
-| Integration | make test-integration | NOT_IMPLEMENTED |
-| Regression | make test-regression | NOT_IMPLEMENTED |
-| Combined | make test | NOT_IMPLEMENTED |
-| Docs | make docs-check | NOT_IMPLEMENTED |
-| Acceptance | make acceptance | NOT_IMPLEMENTED |
+| Structure | make check | IMPLEMENTED (see TESTING.md) |
+| Lint | make lint | IMPLEMENTED (see TESTING.md) |
+| Unit | make test-unit | IMPLEMENTED (see TESTING.md) |
+| Integration | make test-integration | IMPLEMENTED (see TESTING.md) |
+| Regression | make test-regression | IMPLEMENTED (see TESTING.md) |
+| Combined | make test | IMPLEMENTED (see TESTING.md) |
+| Docs | make docs-check | IMPLEMENTED (see TESTING.md) |
+| Acceptance | make acceptance | IMPLEMENTED (see TESTING.md) |
 
 No coverage threshold is set. An unimplemented gate is not a pass.
 
@@ -47,7 +47,7 @@ Immutable commit SHAs, CI run IDs, test reports, dependency audit, compatibility
 Follow Kritva V2 standard: stable task ID, approved criteria, merged PR, required checks on exact commit, recorded reviews, docs/changelog, immutable evidence and no blocker converted into pass.
 
 ## 9. Known limitations
-SDK repository is not yet assigned in the central SDK workstream. Local tasks are PROPOSED / PLANNING_ONLY, with no weights or credit. Upstream versions and Control Plane API remain unpinned. No runtime or passing gate is claimed.
+SDK repository is not yet assigned in the central SDK workstream. KOS-SDK-001 to 003 are complete with program acceptance pending and KOS-SDK-004 to 009 are approved plan scope (D-153); none has weight or credit until kritva-program baselines it. Upstream versions and Control Plane API remain unpinned. No runtime or passing gate is claimed.
 
 ## 10. Change control
 Accepted criteria are immutable. Changes require a new revision and review.

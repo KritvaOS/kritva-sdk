@@ -25,6 +25,10 @@ class PackageFoundationTest(unittest.TestCase):
     def test_py_typed_present(self):
         self.assertTrue((ROOT / "src" / "kritva_sdk" / "py.typed").is_file())
 
+    def test_no_optional_dependencies_declared(self):
+        # no extras exist, so no optional integration can leak into the base import (KOS-SDK-002 AC-004)
+        self.assertNotIn("optional-dependencies", (ROOT / "pyproject.toml").read_text())
+
     def test_no_runtime_dependencies_declared(self):
         text = (ROOT / "pyproject.toml").read_text()
         self.assertRegex(text, re.compile(r"^dependencies = \[\]$", re.M))

@@ -11,4 +11,4 @@
 | V2-M7-SDK-001 | KOS-SDK-007 | APPROVED_PLAN, NOT_STARTED | Telemetry/result contracts |
 | V2-M8-SDK-001 | KOS-SDK-008 | APPROVED_PLAN, NOT_STARTED | Security and release evidence |
 
-Gates `make check`, `lint`, `test-integration`, `test-regression`, `docs-check` and `acceptance` are NOT_IMPLEMENTED and block program acceptance until implemented or dispositioned; no gate is reported as passing beyond `make test-unit`, `make packaging-test`, `make schema-drift` and `make conformance-test`.
+The local gates `check`, `lint`, `test-unit`, `test-integration`, `test-regression`, `test`, `docs-check` and `acceptance` are implemented (TESTING.md). Their results on an exact closing commit and CI run are recorded at acceptance, not here.

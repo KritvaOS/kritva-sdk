@@ -1,0 +1,21 @@
+{
+  "default": "0.1.0",
+  "fields": [
+    [
+      "sense_contract_version",
+      "str",
+      "0.1.0"
+    ]
+  ],
+  "frozen": true,
+  "unsupported": [
+    "UnsupportedContractVersion",
+    "UNSUPPORTED_CONTRACT_VERSION",
+    "sense_contract_version"
+  ],
+  "wrong_type": [
+    "ContractError",
+    "MALFORMED_FIELD",
+    "sense_contract_version"
+  ]
+}

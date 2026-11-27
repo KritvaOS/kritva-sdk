@@ -1,0 +1,35 @@
+{
+  "multiple": {
+    "class": "ContractError",
+    "code": "UNKNOWN_FIELD",
+    "path": "extra",
+    "text": "UNKNOWN_FIELD at extra: field is not defined by contract 0.1.0",
+    "violations": [
+      [
+        "UNKNOWN_FIELD",
+        "extra",
+        "field is not defined by contract 0.1.0"
+      ],
+      [
+        "UNKNOWN_FRAME",
+        "frame_id",
+        "'map' is not a defined frame (world, base, sensor)"
+      ],
+      [
+        "MALFORMED_FIELD",
+        "sequence",
+        "must be an integer >= 0"
+      ]
+    ]
+  },
+  "unsupported_version_is_early": {
+    "class": "UnsupportedContractVersion",
+    "violations": [
+      [
+        "UNSUPPORTED_CONTRACT_VERSION",
+        "contract_version",
+        "sense contract version '9.9.9' is not supported; supported: 0.1.0"
+      ]
+    ]
+  }
+}

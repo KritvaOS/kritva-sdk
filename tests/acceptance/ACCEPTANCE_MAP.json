@@ -1,0 +1,147 @@
+{
+  "_note": "Maps every acceptance criterion AC-nnn of KOS-SDK-001..003 to automated tests or to a recorded manual review. AUTOMATED entries run in make acceptance; MANUAL entries are listed and are never reported as passed. Entries are 'directory::module.Class[.test]'.",
+  "KOS-SDK-001/AC-001": {
+    "mode": "MANUAL",
+    "evidence": "architecture review: ARCHITECTURE.md, README purpose and exclusions"
+  },
+  "KOS-SDK-001/AC-002": {
+    "mode": "MANUAL",
+    "evidence": "owner review: ADR-001 language decision"
+  },
+  "KOS-SDK-001/AC-003": {
+    "mode": "MANUAL",
+    "evidence": "API review: API.md candidate surface"
+  },
+  "KOS-SDK-001/AC-004": {
+    "mode": "MANUAL",
+    "evidence": "design review: ADR-002 lifecycle, sync/async, timeout and cancellation"
+  },
+  "KOS-SDK-001/AC-005": {
+    "mode": "MANUAL",
+    "evidence": "boundary review: ARCHITECTURE.md boundary map"
+  },
+  "KOS-SDK-001/AC-006": {
+    "mode": "MANUAL",
+    "evidence": "dependency review: planning/dependencies/CONTRACT_DEPENDENCY_REGISTER.md"
+  },
+  "KOS-SDK-001/AC-007": {
+    "mode": "MANUAL",
+    "evidence": "documentation review: no runtime, hardware or release readiness claimed"
+  },
+  "KOS-SDK-001/AC-008": {
+    "mode": "MANUAL",
+    "evidence": "PR record: owner dispositions and review evidence (kritva-sdk PRs 1 and 4, kritva-program D-150)"
+  },
+  "KOS-SDK-001/AC-009": {
+    "mode": "MANUAL",
+    "evidence": "dependency review: Sense 0.1.0 pinned at commit 543f574, other upstreams excluded"
+  },
+  "KOS-SDK-001/AC-010": {
+    "mode": "MANUAL",
+    "evidence": "API review: exclusions in API.md and ARCHITECTURE.md (also enforced by make lint rule L009)"
+  },
+  "KOS-SDK-001/AC-011": {
+    "mode": "MANUAL",
+    "evidence": "program PR record: kritva-program D-149 to D-153"
+  },
+  "KOS-SDK-001/AC-012": {
+    "mode": "MANUAL",
+    "evidence": "owner approval of the public API and architecture (kritva-program D-150)"
+  },
+  "KOS-SDK-002/AC-001": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/packaging::test_packaging.PackagingTest.test_wheel_installs_and_imports",
+      "tests/packaging::test_packaging.PackagingTest.test_sdist_installs_and_imports"
+    ]
+  },
+  "KOS-SDK-002/AC-002": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/packaging::test_packaging.PackagingTest.test_wheel_metadata_and_contents",
+      "tests/unit::test_package.PackageFoundationTest.test_no_runtime_dependencies_declared"
+    ]
+  },
+  "KOS-SDK-002/AC-003": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_package.PackageFoundationTest.test_base_import_pulls_no_forbidden_modules",
+      "tests/unit::test_config_errors_compat.BaseImportTest"
+    ]
+  },
+  "KOS-SDK-002/AC-004": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_package.PackageFoundationTest.test_no_optional_dependencies_declared",
+      "tests/unit::test_package.PackageFoundationTest.test_base_import_pulls_no_forbidden_modules"
+    ]
+  },
+  "KOS-SDK-002/AC-005": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/packaging::test_packaging.PackagingTest.test_two_builds_are_byte_identical"
+    ]
+  },
+  "KOS-SDK-002/AC-006": {
+    "mode": "MANUAL",
+    "evidence": "build report: PACKAGING-EVIDENCE lines (artifact SHA-256) in the CI log of the closing commit; recorded at acceptance"
+  },
+  "KOS-SDK-002/AC-007": {
+    "mode": "MANUAL",
+    "evidence": "version review: PEP 440 form is tested (test_package), the SemVer policy is an owner decision"
+  },
+  "KOS-SDK-003/AC-001": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_config_errors_compat.ConfigTest"
+    ]
+  },
+  "KOS-SDK-003/AC-002": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_config_errors_compat.ErrorsTest",
+      "tests/unit::test_sense.Ordering"
+    ]
+  },
+  "KOS-SDK-003/AC-003": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_config_errors_compat.CompatTest",
+      "tests/unit::test_sense.VersionHandling",
+      "tests/unit::test_config_errors_compat.ConfigTest.test_unsupported_version_rejected_at_construction"
+    ]
+  },
+  "KOS-SDK-003/AC-004": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_schema_drift.VendoredFilesTest",
+      "tests/unit::test_schema_drift.OfflineDriftTest",
+      "tests/unit::test_schema_drift.UpstreamDriftTest"
+    ]
+  },
+  "KOS-SDK-003/AC-005": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_sense",
+      "tests/unit::test_sense_fixtures"
+    ]
+  },
+  "KOS-SDK-003/AC-006": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_config_errors_compat.BaseImportTest",
+      "tests/unit::test_sense.Hygiene",
+      "tests/unit::test_package.PackageFoundationTest.test_base_import_pulls_no_forbidden_modules"
+    ]
+  },
+  "KOS-SDK-003/AC-007": {
+    "mode": "MANUAL",
+    "evidence": "design review: no Core client, transport or unapproved contract (API.md; also enforced by make lint rule L009)"
+  },
+  "KOS-SDK-003/AC-008": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/conformance::test_sense_oracle"
+    ]
+  }
+}
