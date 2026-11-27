@@ -1,7 +1,7 @@
 # kritva-sdk: make targets. Standard check targets (kritva-program v2/planning/ACCEPTANCE_STANDARD.md).
 # Kritva Makefile standard (kritva-program v2/planning/standards/MAKEFILE_STANDARD.md): `make` or `make help` lists the targets.
 # A target is documented by `name: ## text` on its rule line; `##@ Name` starts a help group.
-# An unimplemented gate exits 3 (NOT_IMPLEMENTED). It is never a pass.
+# An unimplemented gate exits 3 (NOT_IMPLEMENTED) and an incomplete run exits 4. Neither is a pass.
 .DEFAULT_GOAL := help
 .PHONY: help
 
@@ -32,39 +32,40 @@ check-readme: ## Structural check of README.md (metadata, topics, relative links
 schema-drift: ## Check the vendored Sense contract files and fixtures against their PROVENANCE.json (offline; same as the schema-drift workflow)
 	@python3 scripts/check_schema_drift.py
 
-##@ Gates (unimplemented gates exit 3)
-.PHONY: lint test-unit test-integration test-regression test acceptance packaging-test conformance-test
-define not_implemented
-	@echo "NOT_IMPLEMENTED: $(1) has no tests yet; this is not a pass"; exit 3
-endef
+##@ Gates (an incomplete or unimplemented gate never passes: exit 4 or 3)
+.PHONY: lint test-unit test-integration test-regression test regression-golden acceptance packaging-test conformance-test oracle-fetch
 
-lint: ## Static analysis and lint (NOT_IMPLEMENTED: exits 3)
-	$(call not_implemented,lint)
+lint: ## Static checks of the Python files: syntax, unused and wildcard imports, bare except, mutable defaults, whitespace, no print or forbidden import in the library
+	@python3 scripts/lint.py
 test-unit: ## Unit tests: package, errors, compatibility, config, Sense validator and models, vendored fixtures, drift checker (KOS-SDK-002, KOS-SDK-003)
 	@python3 -m unittest discover -s tests/unit
-test-integration: ## Integration tests (NOT_IMPLEMENTED: exits 3)
-	$(call not_implemented,test-integration)
-test-regression: ## Regression tests (NOT_IMPLEMENTED: exits 3)
-	$(call not_implemented,test-regression)
-test: ## All tests (NOT_IMPLEMENTED: exits 3)
-	$(call not_implemented,test)
-acceptance: ## Acceptance gate (NOT_IMPLEMENTED: exits 3)
-	$(call not_implemented,acceptance)
+test-integration: ## Integration gate INT-01 to INT-07 (isolated import, wire path, negative path, drift, oracle, packaging, JSON Schema subset); a skipped scenario exits 4 (INCOMPLETE). Needs the oracle (make oracle-fetch), PyPI or KRITVA_WHEELHOUSE, and jsonschema
+	@python3 scripts/integration_gate.py --full
+test-regression: ## Regression gate REG-01 to REG-07: public API, contract constants, fixture results, error behaviour, config and vendored hashes against tests/regression/golden
+	@python3 scripts/regression_gate.py
+test: ## All tests: runs test-unit, test-integration and test-regression once each, shows the three results separately and fails if any one fails or is incomplete
+	@python3 scripts/test_all.py
+regression-golden: ## Show whether the regression golden data are current; WRITE=1 rewrites them (only after the change was decided, tests/regression/README.md)
+	@python3 scripts/regression_gate.py $(if $(WRITE),--write,)
+acceptance: ## Acceptance gate: runs the automatable criteria of KOS-SDK-001..003 (tests/acceptance/ACCEPTANCE_MAP.json); manual criteria are listed, never passed; a skip exits 4
+	@python3 scripts/acceptance_gate.py --full
 packaging-test: ## Build the wheel and sdist in a hash-pinned environment and install each in a clean venv (needs PyPI or KRITVA_WHEELHOUSE; KOS-SDK-002)
 	@KRITVA_PACKAGING_TESTS=1 python3 -m unittest discover -s tests/packaging -v
+oracle-fetch: ## Check out the pinned kritva-sense oracle into .cache/kritva-sense (network; test-only; used by test-integration and acceptance)
+	@python3 scripts/oracle_fetch.py
 conformance-test: ## Cross-validate against the pinned kritva-sense oracle (set KRITVA_SENSE_ORACLE; KRITVA_REQUIRE_ORACLE=1 makes absence a failure; KOS-SDK-003)
 	@python3 -m unittest discover -s tests/conformance -v
 
 ##@ Preflight
 # "make preflight" is the one command to run before pushing. It runs the checks CI runs on a pull request,
 # keeps going after a failure, prints a summary, fixes nothing and never fetches or installs anything.
-# Not mirrored: secret-scan (gitleaks), the PR gate's remote rules (required workflows and approvals), packaging-test
-# (needs network) and conformance-test (needs the pinned kritva-sense checkout).
+# Not mirrored: secret-scan (gitleaks), the PR gate's remote rules (required workflows and approvals), and the gates
+# that need the network or the pinned kritva-sense checkout (test-integration, acceptance, packaging-test, conformance-test).
 # PREFLIGHT_BASE is the branch the commits are compared with; run "git fetch origin" first.
 .PHONY: preflight preflight-commits readme-test python-check progress-check hooks-install preflight-hook-on preflight-hook-off
 
 PREFLIGHT_BASE ?= origin/main
-PREFLIGHT_STEPS := python-check check docs-check check-readme readme-test progress-check schema-drift preflight-commits test-unit
+PREFLIGHT_STEPS := python-check lint check docs-check check-readme readme-test progress-check schema-drift preflight-commits test-unit test-regression
 
 preflight: ## Run the CI checks locally and report every failure (PREFLIGHT_BASE=origin/main)
 	@fail=""; \

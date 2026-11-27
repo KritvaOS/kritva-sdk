@@ -6,6 +6,7 @@ Cross-validation against the pinned upstream fixtures and reference validator is
 import copy
 import dataclasses
 import json
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -321,8 +322,17 @@ class DeferredChecks(unittest.TestCase):
 
 class Hygiene(unittest.TestCase):
     def test_no_oracle_or_third_party_import(self):
-        for name in ("kritva_sense", "jsonschema", "rclpy", "requests", "httpx", "urllib3"):
-            self.assertNotIn(name, sys.modules)
+        # A clean interpreter: other suites in the same process (the oracle comparison, the JSON Schema check) may
+        # legitimately import test-only modules, so sys.modules of the test process proves nothing.
+        code = (
+            "import sys; sys.path.insert(0, sys.argv[1]); import kritva_sdk, kritva_sdk.sense; "
+            "names = ('kritva_sense', 'jsonschema', 'rclpy', 'requests', 'httpx', 'urllib3'); "
+            "bad = [n for n in names if n in sys.modules]; "
+            "print(','.join(bad)); sys.exit(1 if bad else 0)"
+        )
+        src = str(Path(__file__).resolve().parents[2] / "src")
+        done = subprocess.run([sys.executable, "-I", "-c", code, src], capture_output=True, text=True, check=False)
+        self.assertEqual(done.returncode, 0, f"library imported a forbidden module: {done.stdout.strip()} {done.stderr[-300:]}")
 
 
 if __name__ == "__main__":

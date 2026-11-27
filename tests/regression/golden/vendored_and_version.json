@@ -1,0 +1,15 @@
+{
+  "vendored": {
+    "SENSE_CONTRACT.md": [
+      "f8935feb9efb10dd482e4b7386239295b2180412dbbcbc177aa7a6f86d75abcf",
+      "v0.2.0",
+      "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77"
+    ],
+    "sense-sample.schema.json": [
+      "1f6f0824af55237b0b3e90ddd413ddef8c48e2eb3cd19a7f4244295bd2b9bc6b",
+      "v0.2.0",
+      "543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77"
+    ]
+  },
+  "version": "0.1.0.dev0"
+}

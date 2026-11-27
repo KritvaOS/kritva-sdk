@@ -1,0 +1,56 @@
+#==============================================================================
+# Copyright (c) 2026 Kritva Robotics Private Limited.
+# SPDX-License-Identifier: Apache-2.0
+#
+# File        : gates.yml
+# Description : GitHub Actions run of the required local gates (lint, check, docs-check, test, acceptance)
+#
+# Component   : Infrastructure
+# Module      : Acceptance Gates
+# Layer       : Development Infrastructure
+#
+# Requirements: kritva-program ACCEPTANCE_STANDARD section 3
+# API         : GitHub Actions workflow
+#
+# Author      : KritvaOS
+# Created     : 26-11-2026
+#==============================================================================
+
+# gates.yml: runs the gates with the pinned kritva-sense oracle and fails if the oracle is unavailable
+# (KRITVA_REQUIRE_ORACLE=1). jsonschema and kritva-sense are test-only; the SDK never depends on them.
+name: gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KRITVA_REQUIRE_ORACLE: "1"
+      KRITVA_SENSE_ORACLE: ${{ github.workspace }}/upstream-sense
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Check out kritva-sense at the exact pinned commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: KritvaOS/kritva-sense
+          ref: 543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77
+          path: upstream-sense
+      - name: Test-only dependency (JSON Schema subset check, INT-07)
+        run: python3 -m pip install "jsonschema==4.23.0"
+      - name: Structure, lint and docs
+        run: make check lint docs-check
+      - name: All tests (unit, integration, regression)
+        run: make test
+      - name: Acceptance gate
+        run: make acceptance

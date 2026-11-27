@@ -1,0 +1,185 @@
+{
+  "kritva_sdk": {
+    "__all__": [
+      "SdkConfig",
+      "__version__",
+      "supported_contracts"
+    ],
+    "members": {
+      "SdkConfig": {
+        "bases": [],
+        "kind": "class",
+        "methods": [],
+        "signature": "(sense_contract_version: 'str' = '0.1.0') -> None"
+      },
+      "__version__": {
+        "kind": "value",
+        "type": "str"
+      },
+      "supported_contracts": {
+        "kind": "function",
+        "signature": "() -> 'dict[str, tuple[str, ...]]'"
+      }
+    }
+  },
+  "kritva_sdk.compat": {
+    "__all__": [
+      "require_supported",
+      "supported_contracts"
+    ],
+    "members": {
+      "require_supported": {
+        "kind": "function",
+        "signature": "(contract: 'str', version: 'object', path: 'str' = 'contract_version') -> 'str'"
+      },
+      "supported_contracts": {
+        "kind": "function",
+        "signature": "() -> 'dict[str, tuple[str, ...]]'"
+      }
+    }
+  },
+  "kritva_sdk.config": {
+    "__all__": [
+      "SdkConfig"
+    ],
+    "members": {
+      "SdkConfig": {
+        "bases": [],
+        "kind": "class",
+        "methods": [],
+        "signature": "(sense_contract_version: 'str' = '0.1.0') -> None"
+      }
+    }
+  },
+  "kritva_sdk.errors": {
+    "__all__": [
+      "ContractError",
+      "SdkError",
+      "UnsupportedContractVersion",
+      "Violation"
+    ],
+    "members": {
+      "ContractError": {
+        "bases": [
+          "SdkError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [
+          "single"
+        ],
+        "signature": "(violations: 'tuple[Violation, ...] | list[Violation]') -> 'None'"
+      },
+      "SdkError": {
+        "bases": [
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": null
+      },
+      "UnsupportedContractVersion": {
+        "bases": [
+          "ContractError",
+          "SdkError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [
+          "for_version"
+        ],
+        "signature": "(violations: 'tuple[Violation, ...] | list[Violation]') -> 'None'"
+      },
+      "Violation": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "as_tuple"
+        ],
+        "signature": "(path: 'str', code: 'str', message: 'str') -> None"
+      }
+    }
+  },
+  "kritva_sdk.sense": {
+    "__all__": [
+      "CLOCKS",
+      "ERROR_CODES",
+      "FRAMES",
+      "KINDS",
+      "Measurement",
+      "SENSE_CONTRACT_VERSION",
+      "SenseSample",
+      "TIMESTAMP_UNIT",
+      "Timestamp",
+      "VALIDITY_STATES",
+      "parse_sample",
+      "validate_sample"
+    ],
+    "members": {
+      "CLOCKS": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "ERROR_CODES": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "FRAMES": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "KINDS": {
+        "kind": "value",
+        "type": "mappingproxy"
+      },
+      "Measurement": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(value: 'int | float', unit: 'str') -> None"
+      },
+      "SENSE_CONTRACT_VERSION": {
+        "kind": "value",
+        "type": "str"
+      },
+      "SenseSample": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "from_dict",
+          "to_dict"
+        ],
+        "signature": "(contract_version: 'str', sensor_id: 'str', kind: 'str', sequence: 'int', timestamp: 'Timestamp', frame_id: 'str', validity: 'str', measurements: 'Mapping[str, Measurement]', error_code: 'str | None' = None) -> None"
+      },
+      "TIMESTAMP_UNIT": {
+        "kind": "value",
+        "type": "str"
+      },
+      "Timestamp": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(clock: 'str', value: 'int', unit: 'str' = 'ns') -> None"
+      },
+      "VALIDITY_STATES": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "parse_sample": {
+        "kind": "function",
+        "signature": "(payload: 'object') -> 'SenseSample'"
+      },
+      "validate_sample": {
+        "kind": "function",
+        "signature": "(payload: 'object') -> 'tuple[Violation, ...]'"
+      }
+    }
+  }
+}

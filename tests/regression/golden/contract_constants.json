@@ -1,0 +1,54 @@
+{
+  "clocks": [
+    "monotonic",
+    "utc"
+  ],
+  "error_codes": [
+    "MISSING_FIELD",
+    "MALFORMED_FIELD",
+    "UNKNOWN_FIELD",
+    "UNSUPPORTED_CONTRACT_VERSION",
+    "INVALID_SENSOR_ID",
+    "INVALID_TIMESTAMP",
+    "INVALID_UNIT",
+    "UNKNOWN_FRAME",
+    "INVALID_VALIDITY",
+    "NON_FINITE_VALUE",
+    "SEQUENCE_REGRESSION",
+    "STALE_DATA",
+    "MISSING_DATA",
+    "INVALID_DATA"
+  ],
+  "frames": [
+    "world",
+    "base",
+    "sensor"
+  ],
+  "kinds": {
+    "encoder": {
+      "position": "rad"
+    },
+    "imu": {
+      "accel_x": "m/s^2",
+      "accel_y": "m/s^2",
+      "accel_z": "m/s^2",
+      "gyro_x": "rad/s",
+      "gyro_y": "rad/s",
+      "gyro_z": "rad/s"
+    },
+    "range": {
+      "distance": "m"
+    },
+    "temperature": {
+      "temperature": "K"
+    }
+  },
+  "timestamp_unit": "ns",
+  "validity_states": [
+    "VALID",
+    "STALE",
+    "MISSING",
+    "INVALID"
+  ],
+  "version": "0.1.0"
+}
