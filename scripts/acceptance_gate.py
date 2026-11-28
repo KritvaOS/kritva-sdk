@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance gate (make acceptance): runs the automatable acceptance criteria of KOS-SDK-001..003. Stdlib only.
+"""Acceptance gate (make acceptance): runs the automatable acceptance criteria of KOS-SDK-001..003 and KOS-SDK-005. Stdlib only.
 
     python3 scripts/acceptance_gate.py [--full]
 
@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAP = ROOT / "tests" / "acceptance" / "ACCEPTANCE_MAP.json"
-TASKS = ("KOS-SDK-001", "KOS-SDK-002", "KOS-SDK-003")
+TASKS = ("KOS-SDK-001", "KOS-SDK-002", "KOS-SDK-003", "KOS-SDK-005")
 
 
 def criteria_ids():

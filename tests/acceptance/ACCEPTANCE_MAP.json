@@ -1,5 +1,5 @@
 {
-  "_note": "Maps every acceptance criterion AC-nnn of KOS-SDK-001..003 to automated tests or to a recorded manual review. AUTOMATED entries run in make acceptance; MANUAL entries are listed and are never reported as passed. Entries are 'directory::module.Class[.test]'.",
+  "_note": "Maps every acceptance criterion AC-nnn of KOS-SDK-001..003 and KOS-SDK-005 to automated tests or to a recorded manual review. AUTOMATED entries run in make acceptance; MANUAL entries are listed and are never reported as passed. Entries are 'directory::module.Class[.test]'.",
   "KOS-SDK-001/AC-001": {
     "mode": "MANUAL",
     "evidence": "architecture review: ARCHITECTURE.md, README purpose and exclusions"
@@ -143,5 +143,98 @@
     "tests": [
       "tests/conformance::test_sense_oracle"
     ]
+  },
+  "KOS-SDK-005/AC-001": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_schema_drift.VendoredFilesTest"
+    ]
+  },
+  "KOS-SDK-005/AC-002": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_stream",
+      "tests/unit::test_frame_graph",
+      "tests/conformance::test_stream_oracle",
+      "tests/conformance::test_frame_graph_oracle"
+    ]
+  },
+  "KOS-SDK-005/AC-003": {
+    "mode": "MANUAL",
+    "evidence": "design review: no API beyond the approved stream 0.1.0 and frame-graph 0.1.0 contracts (API.md support matrix; also enforced by make lint rule L009)"
+  },
+  "KOS-SDK-005/AC-004": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_stream.HygieneTest",
+      "tests/unit::test_frame_graph.HygieneTest"
+    ]
+  },
+  "KOS-SDK-005/AC-005": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_stream",
+      "tests/unit::test_frame_graph"
+    ]
+  },
+  "KOS-SDK-005/AC-006": {
+    "mode": "MANUAL",
+    "evidence": "docs review of the support matrix in API.md (implemented, unsupported); tests/unit/test_support_matrix.py checks it against supported_contracts()"
+  },
+  "KOS-SDK-005/AC-007": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_schema_drift"
+    ]
+  },
+  "KOS-SDK-005/AC-008": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/conformance::test_stream_oracle"
+    ]
+  },
+  "KOS-SDK-005/AC-009": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/conformance::test_frame_graph_oracle"
+    ]
+  },
+  "KOS-SDK-005/AC-010": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_stream.IncrementalTest",
+      "tests/conformance::test_stream_oracle.StreamOracleParity.test_batch_split_invariance_against_the_oracle"
+    ]
+  },
+  "KOS-SDK-005/AC-011": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_frame_graph.GraphRulesTest",
+      "tests/unit::test_frame_graph.ResolveTest",
+      "tests/unit::test_frame_graph.ResolutionTypeTest"
+    ]
+  },
+  "KOS-SDK-005/AC-012": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_stream.IncrementalTest.test_misuse_is_a_typed_sdk_error_not_a_diagnostic",
+      "tests/unit::test_stream.ModelTest",
+      "tests/unit::test_frame_graph.TransformPointTest",
+      "tests/unit::test_frame_graph.ModelTest"
+    ]
+  },
+  "KOS-SDK-005/AC-013": {
+    "mode": "AUTOMATED",
+    "tests": [
+      "tests/unit::test_stream.ModelTest.test_unsupported_version_fails_early_with_the_upstream_code",
+      "tests/unit::test_stream.DocumentTest",
+      "tests/unit::test_frame_graph.ModelTest.test_non_conformant_is_never_represented_and_version_fails_early",
+      "tests/unit::test_frame_graph.DeclarationTest",
+      "tests/unit::test_config_errors_compat.CompatTest"
+    ]
+  },
+  "KOS-SDK-005/AC-014": {
+    "mode": "MANUAL",
+    "evidence": "docs review: module docstrings of kritva_sdk.stream and kritva_sdk.frame_graph and the API.md support matrix state the non-goals and the transform convention"
   }
 }

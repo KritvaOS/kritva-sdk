@@ -1,5 +1,11 @@
 # Planning Changelog
 
+## 2026-11-28 (KOS-SDK-005 PR4, conformance and acceptance)
+- Extended the regression gate: REG-03 covers the stream and frame graph constants, REG-04 their fixture results (including resolved transforms), REG-05 the early unsupported-version cases. The golden data change is additive only.
+- Extended the integration gate: INT-01..05 and INT-07 cover the stream and frame graph modules (wire round trip, documented rejection codes, no secrets in errors, tamper checks for every vendored kind, schema subset checks); `--full` runs 7 scenarios.
+- Added acceptance criteria AC-007 to AC-014 for KOS-SDK-005 with 14 acceptance-map entries (AC-003, AC-006 and AC-014 are manual) and added KOS-SDK-005 to the acceptance gate. Added a test that keeps the API.md support matrix equal to `supported_contracts()`.
+- KOS-SDK-005 remains outside the frozen baseline: no credit and no acceptance are claimed.
+
 ## 2026-11-28 (KOS-SDK-005 PR3, frame-graph adapter)
 - Added `kritva_sdk.frame_graph`: typed transform and graph models, `validate_transform`, `validate_graph` with the upstream `FG_` codes, deterministic `resolve` returning a `Resolution` (a canonical transform or the violations, never both), `transform_point`, `parse_frame_graph`. `frame_graph` 0.1.0 is now declared in `supported_contracts()`.
 - Vendored the 42 upstream frame graph fixtures under `tests/data/frame_graph` with provenance; the drift check covers them. Added unit tests and oracle parity tests (diagnostics, every frame pair, generated graphs, 3,000 seeded mutations, exact numerical parity). Regenerated the REG-01 and REG-02 golden data on purpose.
