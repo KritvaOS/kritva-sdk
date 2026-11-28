@@ -1,5 +1,8 @@
 # Planning Changelog
 
+## 2026-11-28 (KOS-SDK-005 status report)
+- kritva-program baselined KOS-SDK-005 in baseline v17 (D-161, weight 5, V2-M3-SDK-001). `status/status.json` now reports it COMPLETE with the seven CI runs on main commit 3505859 (pull request 20, the last of pull requests 17 to 20). This is an execution report only: the 18 manual acceptance criteria need the owner's recorded review, and acceptance and credit need the owner's approval record in kritva-program.
+
 ## 2026-11-28 (KOS-SDK-005 PR4, conformance and acceptance)
 - Extended the regression gate: REG-03 covers the stream and frame graph constants, REG-04 their fixture results (including resolved transforms), REG-05 the early unsupported-version cases. The golden data change is additive only.
 - Extended the integration gate: INT-01..05 and INT-07 cover the stream and frame graph modules (wire round trip, documented rejection codes, no secrets in errors, tamper checks for every vendored kind, schema subset checks); `--full` runs 7 scenarios.
