@@ -103,6 +103,161 @@
       }
     }
   },
+  "kritva_sdk.frame_graph": {
+    "__all__": [
+      "FG_ERROR_CODES",
+      "FRAME_GRAPH_CONTRACT_VERSION",
+      "FRAME_ID_PATTERN",
+      "FrameGraph",
+      "FrameGraphContractError",
+      "FrameGraphUsageError",
+      "FrameTransform",
+      "QUAT_TOLERANCE",
+      "Quaternion",
+      "Resolution",
+      "ResolvedTransform",
+      "SIGN_EPSILON",
+      "TRANSLATION_UNIT",
+      "Translation",
+      "UnsupportedFrameGraphVersion",
+      "parse_frame_graph",
+      "resolve",
+      "transform_point",
+      "validate_graph",
+      "validate_transform"
+    ],
+    "members": {
+      "FG_ERROR_CODES": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "FRAME_GRAPH_CONTRACT_VERSION": {
+        "kind": "value",
+        "type": "str"
+      },
+      "FRAME_ID_PATTERN": {
+        "kind": "value",
+        "type": "str"
+      },
+      "FrameGraph": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "frames",
+          "resolve",
+          "to_dict"
+        ],
+        "signature": "(transforms: 'tuple[FrameTransform, ...]', contract_version: 'str' = '0.1.0') -> None"
+      },
+      "FrameGraphContractError": {
+        "bases": [
+          "ContractError",
+          "SdkError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": "(violations: 'tuple[Violation, ...] | list[Violation]') -> 'None'"
+      },
+      "FrameGraphUsageError": {
+        "bases": [
+          "SdkError",
+          "ValueError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": null
+      },
+      "FrameTransform": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(parent: 'str', child: 'str', translation: 'Translation', rotation: 'Quaternion', translation_unit: 'str' = 'm') -> None"
+      },
+      "QUAT_TOLERANCE": {
+        "kind": "value",
+        "type": "float"
+      },
+      "Quaternion": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(w: 'int | float', x: 'int | float', y: 'int | float', z: 'int | float') -> None"
+      },
+      "Resolution": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "unwrap"
+        ],
+        "signature": "(transform: 'ResolvedTransform | None', violations: 'tuple[Violation, ...]' = ()) -> None"
+      },
+      "ResolvedTransform": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "apply",
+          "to_dict"
+        ],
+        "signature": "(translation: 'tuple[float, float, float]', rotation: 'tuple[float, float, float, float]', translation_unit: 'str' = 'm') -> None"
+      },
+      "SIGN_EPSILON": {
+        "kind": "value",
+        "type": "float"
+      },
+      "TRANSLATION_UNIT": {
+        "kind": "value",
+        "type": "str"
+      },
+      "Translation": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(x: 'int | float', y: 'int | float', z: 'int | float') -> None"
+      },
+      "UnsupportedFrameGraphVersion": {
+        "bases": [
+          "FrameGraphContractError",
+          "ContractError",
+          "SdkError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": "(violations: 'tuple[Violation, ...] | list[Violation]') -> 'None'"
+      },
+      "parse_frame_graph": {
+        "kind": "function",
+        "signature": "(doc: 'object') -> 'FrameGraph'"
+      },
+      "resolve": {
+        "kind": "function",
+        "signature": "(graph: 'object', source: 'object', target: 'object') -> 'Resolution'"
+      },
+      "transform_point": {
+        "kind": "function",
+        "signature": "(transform: 'object', point: 'Sequence[int | float]') -> 'tuple[float, float, float]'"
+      },
+      "validate_graph": {
+        "kind": "function",
+        "signature": "(doc: 'object') -> 'tuple[Violation, ...]'"
+      },
+      "validate_transform": {
+        "kind": "function",
+        "signature": "(record: 'object', path: 'str' = '$') -> 'tuple[Violation, ...]'"
+      }
+    }
+  },
   "kritva_sdk.sense": {
     "__all__": [
       "CLOCKS",

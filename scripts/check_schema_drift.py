@@ -1,7 +1,7 @@
 """Checks the vendored Sense contract files against their recorded provenance (KOS-SDK-003, AC-004). Stdlib only.
 
     python3 scripts/check_schema_drift.py                  offline: every vendored file (the schema and prose contract
-                                                           under src/, the test fixtures under tests/data/sense and tests/data/stream) matches
+                                                           under src/, the test fixtures under tests/data/sense, tests/data/stream and tests/data/frame_graph) matches
                                                            its recorded SHA-256
     python3 scripts/check_schema_drift.py --upstream DIR   also: DIR is a kritva-sense checkout at exactly the recorded
                                                            commit and holds byte-identical files
@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "src" / "kritva_sdk" / "_schemas" / "sense"
 FIXTURES = ROOT / "tests" / "data" / "sense"
 STREAM_FIXTURES = ROOT / "tests" / "data" / "stream"
+FRAME_GRAPH_FIXTURES = ROOT / "tests" / "data" / "frame_graph"
 REQUIRED = ("file", "upstream_repo", "upstream_path", "contract", "contract_version", "tag", "commit", "sha256",
             "license", "approval_status", "decision_ref", "role")
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
@@ -103,7 +104,7 @@ def main(argv=None):
     except SystemExit as exc:
         return 2 if exc.code else 0
     problems = []
-    for vendor in ([Path(args.vendor_dir)] if args.vendor_dir else [VENDOR, FIXTURES, STREAM_FIXTURES]):
+    for vendor in ([Path(args.vendor_dir)] if args.vendor_dir else [VENDOR, FIXTURES, STREAM_FIXTURES, FRAME_GRAPH_FIXTURES]):
         found, prov = check_offline(vendor)
         problems += found
         if prov is not None and args.upstream:

@@ -9,7 +9,7 @@ from kritva_sdk.errors import MALFORMED_FIELD, ContractError, UnsupportedContrac
 
 __all__ = ["supported_contracts", "require_supported"]
 
-_SUPPORTED: dict[str, tuple[str, ...]] = {"sense": ("0.1.0",), "stream": ("0.1.0",)}
+_SUPPORTED: dict[str, tuple[str, ...]] = {"sense": ("0.1.0",), "stream": ("0.1.0",), "frame_graph": ("0.1.0",)}
 
 
 def supported_contracts() -> dict[str, tuple[str, ...]]:
