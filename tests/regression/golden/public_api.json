@@ -181,5 +181,143 @@
         "signature": "(payload: 'object') -> 'tuple[Violation, ...]'"
       }
     }
+  },
+  "kritva_sdk.stream": {
+    "__all__": [
+      "RECORD_KINDS",
+      "STREAM_CONTRACT_VERSION",
+      "STREAM_ERROR_CODES",
+      "SampleViolation",
+      "Stream",
+      "StreamChecker",
+      "StreamClose",
+      "StreamContractError",
+      "StreamDiagnostic",
+      "StreamOpen",
+      "StreamResult",
+      "StreamSample",
+      "StreamUsageError",
+      "UnsupportedStreamVersion",
+      "check_stream",
+      "parse_stream"
+    ],
+    "members": {
+      "RECORD_KINDS": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "STREAM_CONTRACT_VERSION": {
+        "kind": "value",
+        "type": "str"
+      },
+      "STREAM_ERROR_CODES": {
+        "kind": "value",
+        "type": "tuple"
+      },
+      "SampleViolation": {
+        "bases": [],
+        "kind": "class",
+        "methods": [],
+        "signature": "(position: 'int', code: 'str', path: 'str', message: 'str') -> None"
+      },
+      "Stream": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(stream_version: 'str', records: 'tuple[StreamOpen | StreamSample | StreamClose, ...]') -> None"
+      },
+      "StreamChecker": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "feed",
+          "finish",
+          "result"
+        ],
+        "signature": "() -> 'None'"
+      },
+      "StreamClose": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(index: 'int', last_sequence: 'int | None' = None) -> None"
+      },
+      "StreamContractError": {
+        "bases": [
+          "ContractError",
+          "SdkError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": "(result: 'StreamResult', violations: 'tuple[Violation, ...] | None' = None) -> 'None'"
+      },
+      "StreamDiagnostic": {
+        "bases": [],
+        "kind": "class",
+        "methods": [],
+        "signature": "(position: 'int', code: 'str', path: 'str', message: 'str') -> None"
+      },
+      "StreamOpen": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(index: 'int', stream_id: 'str', sensor_id: 'str', kind: 'str', clock: 'str', first_sequence: 'int | None' = None) -> None"
+      },
+      "StreamResult": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "as_tuples"
+        ],
+        "signature": "(stream: 'tuple[StreamDiagnostic, ...]' = (), samples: 'tuple[SampleViolation, ...]' = ()) -> None"
+      },
+      "StreamSample": {
+        "bases": [],
+        "kind": "class",
+        "methods": [
+          "to_dict"
+        ],
+        "signature": "(index: 'int', sample: 'SenseSample') -> None"
+      },
+      "StreamUsageError": {
+        "bases": [
+          "SdkError",
+          "ValueError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": null
+      },
+      "UnsupportedStreamVersion": {
+        "bases": [
+          "StreamContractError",
+          "ContractError",
+          "SdkError",
+          "Exception",
+          "BaseException"
+        ],
+        "kind": "class",
+        "methods": [],
+        "signature": "(result: 'StreamResult', violations: 'tuple[Violation, ...] | None' = None) -> 'None'"
+      },
+      "check_stream": {
+        "kind": "function",
+        "signature": "(doc: 'object') -> 'StreamResult'"
+      },
+      "parse_stream": {
+        "kind": "function",
+        "signature": "(doc: 'object') -> 'Stream'"
+      }
+    }
   }
 }

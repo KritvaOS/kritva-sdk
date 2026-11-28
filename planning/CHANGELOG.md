@@ -1,5 +1,10 @@
 # Planning Changelog
 
+## 2026-11-28 (KOS-SDK-005 PR2, stream adapter)
+- Added `kritva_sdk.stream`: typed stream 0.1.0 models, an incremental `StreamChecker` (same result for every batch split), `check_stream`, `parse_stream`, upstream `STREAM_` codes preserved verbatim and sample violations kept apart with their Sense 0.1.0 codes. `stream` 0.1.0 is now declared in `supported_contracts()`.
+- Vendored the 58 upstream stream fixtures and `expected.json` under `tests/data/stream` with provenance; the drift check covers them. Added unit tests and oracle parity tests (fixtures, harness cases, every split of short streams, 3,000 seeded mutations). Regenerated the REG-01 and REG-02 golden data on purpose.
+- Frame-graph support is not declared yet; it follows in PR3.
+
 ## 2026-11-27 (KOS-SDK-005 start)
 - Owner authorized starting KOS-SDK-005. Plan aligned with the advisory review: four PRs (vendoring, stream adapter, frame-graph adapter, conformance and acceptance).
 - PR1 vendors the stream 0.1.0 and frame graph 0.1.0 contracts and schemas byte-exact from kritva-sense tag v0.2.0 (commit 543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77) with provenance (D-088, D-085). Support is declared in `supported_contracts()` only when each adapter lands, so no version is declared before it is implemented.

@@ -7,7 +7,7 @@
 The first SDK release is a **contract-first Python library**: typed models and validators over approved, versioned upstream contract schemas. It is not a network client.
 
 - Eligible contracts today, all from kritva-sense at pin tag `v0.2.0` (commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`): the **Sense sample contract 0.1.0**, the **stream contract 0.1.0** and the **frame-graph contract 0.1.0** (all APPROVED). Approval makes a contract eligible, not implemented.
-- Staging: the first increment implements the sample contract only; stream and frame-graph models follow under KOS-SDK-005, each with its own pin and conformance tests.
+- Staging: the sample contract is implemented (KOS-SDK-003) and the stream contract is implemented under KOS-SDK-005 (`kritva_sdk.stream`); the frame-graph models follow in the next KOS-SDK-005 increment, with their own conformance tests. Each contract is pinned by the same tag and commit and declared in `supported_contracts()` only when it is implemented.
 - Explicitly excluded until their contracts are approved and versioned: Mind, Motion, Skill, Sim, Control Plane.
 - Explicitly excluded: any Core client (Core R1.0 is an in-process C++ API with no Python or network surface), any HTTP or other network implementation, any ROS 2 or simulator adapter.
 
@@ -18,11 +18,14 @@ Distribution name `kritva-sdk`, import namespace `kritva_sdk` (ADR-001). On 2026
 ```python
 from kritva_sdk import SdkConfig, supported_contracts
 from kritva_sdk.sense import SenseSample, validate_sample, parse_sample
+from kritva_sdk.stream import StreamChecker, check_stream, parse_stream
 from kritva_sdk.errors import ContractError, UnsupportedContractVersion
 
-supported_contracts()            # {"sense": ("0.1.0",)}
+supported_contracts()            # {"sense": ("0.1.0",), "stream": ("0.1.0",)}
 sample = parse_sample(payload)   # raises ContractError subclasses with upstream error codes
 validate_sample(payload)         # schema validation without building a model
+result = check_stream(document)  # StreamResult: STREAM_ diagnostics and sample violations, kept apart
+stream = parse_stream(document)  # a conformant Stream, or StreamContractError / UnsupportedStreamVersion
 ```
 
 | Area | Responsibility | Authority |
@@ -31,6 +34,18 @@ validate_sample(payload)         # schema validation without building a model
 | `kritva_sdk.errors` | Typed errors that preserve upstream codes (for example `UNSUPPORTED_CONTRACT_VERSION`, `UNKNOWN_FIELD`, `INVALID_SENSOR_ID`, `INVALID_TIMESTAMP`) | SDK, codes from the contract |
 | `kritva_sdk.compat` | Supported-contract declarations and version checks that fail before any operation | SDK |
 | `kritva_sdk.sense` | Typed sample models, parse and validate, serialization | kritva-sense (normative schema), SDK (Python surface) |
+| `kritva_sdk.stream` | Typed stream models, an incremental checker with `STREAM_` diagnostics, parse and serialization | kritva-sense (normative contract), SDK (Python surface) |
+
+### Support matrix (KOS-SDK-005)
+
+| Contract | Version | Status in this SDK | Module |
+|---|---|---|---|
+| Sense sample | 0.1.0 | implemented (KOS-SDK-003) | `kritva_sdk.sense` |
+| Sense stream | 0.1.0 | implemented (KOS-SDK-005); declared in `supported_contracts()` | `kritva_sdk.stream` |
+| Sense frame graph | 0.1.0 | vendored and pinned; implementation is the next KOS-SDK-005 increment; not declared yet | none yet |
+| Any other contract or version | any | unsupported: an unsupported stream version is reported with the upstream code `STREAM_UNSUPPORTED_VERSION` and is never accepted silently | none |
+
+Stream results say only that records are well formed and consistent under the contract. They do not establish sensor freshness, calibration, clock synchronisation, physical correctness or safety, and the SDK defines no transport, buffering, loss recovery or stream merging.
 
 Models are hand-written and typed. The vendored JSON Schema stays normative; conformance tests prove that model serialization and validation agree with it. Generated code is not the public API in the first release.
 
