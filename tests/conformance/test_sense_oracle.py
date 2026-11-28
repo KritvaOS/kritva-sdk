@@ -40,7 +40,7 @@ def _load_oracle():
     if head.stdout.strip() != PIN:
         return None, f"oracle HEAD {head.stdout.strip()} is not the pinned commit {PIN}"
     sys.path.insert(0, str(Path(ORACLE_DIR) / "src"))
-    return {n: importlib.import_module(f"kritva_sense.{n}") for n in ("validator", "generator", "conformance")}, None
+    return {n: importlib.import_module(f"kritva_sense.{n}") for n in ("validator", "generator", "conformance", "stream", "frame_graph")}, None
 
 
 ORACLE, PROBLEM = _load_oracle()

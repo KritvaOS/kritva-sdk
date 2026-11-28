@@ -23,6 +23,12 @@ Evidence records exact commit SHA, CI run ID, command, result, environment and s
 - **Oracle cross-validation (AC-008).** `make conformance-test` compares `kritva_sdk.sense` with the pinned kritva-sense validator, generator and conformance harness on the fixtures, generated samples and faults, harness cases and seeded mutations, and requires identical (code, path, message) results. kritva-sense is a test-only oracle named by `KRITVA_SENSE_ORACLE` (a checkout at the recorded commit); the SDK has no runtime dependency on it and its installation never fetches it. With `KRITVA_REQUIRE_ORACLE=1` (CI) an unavailable oracle fails the run; locally the oracle tests skip with an explicit reason. A checkout at any other commit always fails.
 - **Not covered.** Freshness, sequence continuity and the usability decision are context-dependent and not implemented by the SDK, so they are not tested here.
 
+## Stream contract conformance (KOS-SDK-005)
+
+- **Fixtures (offline).** `tests/data/stream/` holds byte-exact copies of the 58 upstream stream fixtures and the upstream-authored `expected.json` (kritva-sense `v0.2.0`, commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`) with `PROVENANCE.json`; `make schema-drift` verifies their hashes. `tests/unit/test_stream.py` checks every fixture against the expected (position, code) pairs, plus lifecycle, sequence, timestamp, identity, batch-split invariance for every split of short streams, the typed models, error mapping and import hygiene.
+- **Oracle cross-validation.** `make conformance-test` also runs `tests/conformance/test_stream_oracle.py`: exact (position, code, path, message) parity with the pinned reference checker on the fixtures, the harness stream cases, every batch split of short fixtures and 3,000 seeded mutations (fixed seed).
+- **Not covered.** Freshness, transport, loss recovery and stream merging are not defined by the contract and are not tested.
+
 ## Gates (implemented)
 
 | Gate | Command | What it does | Needs |
