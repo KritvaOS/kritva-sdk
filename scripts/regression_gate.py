@@ -20,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 GOLDEN = ROOT / "tests" / "regression" / "golden"
 DATA = ROOT / "tests" / "data" / "sense"
+STREAM_DATA = ROOT / "tests" / "data" / "stream"
+FRAME_DATA = ROOT / "tests" / "data" / "frame_graph"
 VENDOR = ROOT / "src" / "kritva_sdk" / "_schemas" / "sense"
 MODULES = ("kritva_sdk", "kritva_sdk.errors", "kritva_sdk.compat", "kritva_sdk.config", "kritva_sdk.sense",
            "kritva_sdk.stream", "kritva_sdk.frame_graph")
@@ -59,10 +61,16 @@ def reg02_supported_contracts():
 
 
 def reg03_contract_constants():
-    from kritva_sdk import sense
+    from kritva_sdk import frame_graph, sense, stream
     return {"version": sense.SENSE_CONTRACT_VERSION, "error_codes": list(sense.ERROR_CODES), "frames": list(sense.FRAMES),
             "clocks": list(sense.CLOCKS), "timestamp_unit": sense.TIMESTAMP_UNIT,
-            "validity_states": list(sense.VALIDITY_STATES), "kinds": {k: dict(v) for k, v in sense.KINDS.items()}}
+            "validity_states": list(sense.VALIDITY_STATES), "kinds": {k: dict(v) for k, v in sense.KINDS.items()},
+            "stream": {"version": stream.STREAM_CONTRACT_VERSION, "error_codes": list(stream.STREAM_ERROR_CODES),
+                       "record_kinds": list(stream.RECORD_KINDS)},
+            "frame_graph": {"version": frame_graph.FRAME_GRAPH_CONTRACT_VERSION,
+                            "error_codes": list(frame_graph.FG_ERROR_CODES),
+                            "quaternion_tolerance": frame_graph.QUAT_TOLERANCE, "sign_epsilon": frame_graph.SIGN_EPSILON,
+                            "translation_unit": frame_graph.TRANSLATION_UNIT, "frame_id_pattern": frame_graph.FRAME_ID_PATTERN}}
 
 
 def reg04_fixture_violations():
@@ -72,6 +80,18 @@ def reg04_fixture_violations():
         for p in sorted((DATA / group).glob("*.json")):
             sample = json.loads(p.read_text(encoding="utf-8"))["sample"]
             out[f"{group}/{p.name}"] = [list(v.as_tuple()) for v in validate_sample(sample)]
+    from kritva_sdk.frame_graph import resolve, validate_graph
+    from kritva_sdk.stream import check_stream
+    for p in sorted(STREAM_DATA.glob("*/*.json")):
+        r = check_stream(json.loads(p.read_text(encoding="utf-8")))
+        out[f"stream/{p.relative_to(STREAM_DATA).as_posix()}"] = [[list(t) for t in part] for part in r.as_tuples()]
+    for p in sorted(FRAME_DATA.glob("*/*.json")):
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        entry = {"violations": [list(v.as_tuple()) for v in validate_graph(doc["graph"])], "resolved": []}
+        for case in doc.get("resolve", []):
+            res = resolve(doc["graph"], case["from"], case["to"])
+            entry["resolved"].append([case["from"], case["to"], res.transform.to_dict() if res.ok else None])
+        out[f"frame_graph/{p.relative_to(FRAME_DATA).as_posix()}"] = entry
     return out
 
 
@@ -91,6 +111,17 @@ def reg05_error_behaviour():
         parse_sample(early)
     except UnsupportedContractVersion as exc:
         out["unsupported_version_is_early"] = {"class": type(exc).__name__, "violations": [list(v.as_tuple()) for v in exc.violations]}
+    from kritva_sdk.frame_graph import UnsupportedFrameGraphVersion, parse_frame_graph
+    from kritva_sdk.stream import UnsupportedStreamVersion, parse_stream
+    for label, parse, exc_type, doc in (
+            ("stream_unsupported_version_is_early", parse_stream, UnsupportedStreamVersion,
+             {"stream_version": "9.9.9", "records": [1]}),
+            ("frame_graph_unsupported_version_is_early", parse_frame_graph, UnsupportedFrameGraphVersion,
+             {"contract_version": "9.9.9", "transforms": [1]})):
+        try:
+            parse(doc)
+        except exc_type as exc:
+            out[label] = {"class": type(exc).__name__, "violations": [list(v.as_tuple()) for v in exc.violations]}
     return out
 
 

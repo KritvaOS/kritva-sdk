@@ -19,6 +19,29 @@
     "MISSING_DATA",
     "INVALID_DATA"
   ],
+  "frame_graph": {
+    "error_codes": [
+      "FG_MALFORMED",
+      "FG_MISSING_FIELD",
+      "FG_UNKNOWN_FIELD",
+      "FG_UNSUPPORTED_VERSION",
+      "FG_INVALID_FRAME_ID",
+      "FG_SELF_LINK",
+      "FG_NON_FINITE",
+      "FG_INVALID_UNIT",
+      "FG_NOT_UNIT_QUATERNION",
+      "FG_DUPLICATE_EDGE",
+      "FG_MULTIPLE_PARENTS",
+      "FG_CYCLE",
+      "FG_FRAME_NOT_IN_GRAPH",
+      "FG_NO_PATH"
+    ],
+    "frame_id_pattern": "^[a-z][a-z0-9_]{0,31}$",
+    "quaternion_tolerance": 1e-09,
+    "sign_epsilon": 1e-12,
+    "translation_unit": "m",
+    "version": "0.1.0"
+  },
   "frames": [
     "world",
     "base",
@@ -42,6 +65,39 @@
     "temperature": {
       "temperature": "K"
     }
+  },
+  "stream": {
+    "error_codes": [
+      "STREAM_MALFORMED",
+      "STREAM_MISSING_FIELD",
+      "STREAM_UNKNOWN_FIELD",
+      "STREAM_UNSUPPORTED_VERSION",
+      "STREAM_UNKNOWN_RECORD",
+      "STREAM_INDEX_MISMATCH",
+      "STREAM_OPEN_MISSING",
+      "STREAM_OPEN_NOT_FIRST",
+      "STREAM_OPEN_REPEATED",
+      "STREAM_SAMPLE_BEFORE_OPEN",
+      "STREAM_SAMPLE_AFTER_CLOSE",
+      "STREAM_CLOSE_BEFORE_OPEN",
+      "STREAM_CLOSE_REPEATED",
+      "STREAM_UNTERMINATED",
+      "STREAM_SEQUENCE_DUPLICATE",
+      "STREAM_SEQUENCE_REGRESSION",
+      "STREAM_SEQUENCE_GAP",
+      "STREAM_FIRST_SEQUENCE_UNMET",
+      "STREAM_LAST_SEQUENCE_UNMET",
+      "STREAM_TIMESTAMP_REGRESSION",
+      "STREAM_CLOCK_MISMATCH",
+      "STREAM_SENSOR_CHANGE",
+      "STREAM_KIND_CHANGE"
+    ],
+    "record_kinds": [
+      "open",
+      "sample",
+      "close"
+    ],
+    "version": "0.1.0"
   },
   "timestamp_unit": "ns",
   "validity_states": [

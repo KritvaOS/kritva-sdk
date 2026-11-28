@@ -1,4 +1,14 @@
 {
+  "frame_graph_unsupported_version_is_early": {
+    "class": "UnsupportedFrameGraphVersion",
+    "violations": [
+      [
+        "FG_UNSUPPORTED_VERSION",
+        "contract_version",
+        "'9.9.9' is not supported; supported: 0.1.0"
+      ]
+    ]
+  },
   "multiple": {
     "class": "ContractError",
     "code": "UNKNOWN_FIELD",
@@ -19,6 +29,16 @@
         "MALFORMED_FIELD",
         "sequence",
         "must be an integer >= 0"
+      ]
+    ]
+  },
+  "stream_unsupported_version_is_early": {
+    "class": "UnsupportedStreamVersion",
+    "violations": [
+      [
+        "STREAM_UNSUPPORTED_VERSION",
+        "stream_version",
+        "9.9.9 is not supported (supported: 0.1.0)"
       ]
     ]
   },

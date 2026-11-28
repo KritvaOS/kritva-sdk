@@ -129,7 +129,7 @@ class RegressionGateTest(unittest.TestCase):
 class AcceptanceGateTest(unittest.TestCase):
     def test_every_criterion_is_classified(self):
         ids = acceptance_gate.criteria_ids()
-        self.assertEqual(len(ids), 27)
+        self.assertEqual(len(ids), 41)
         mapping = json.loads(acceptance_gate.MAP.read_text(encoding="utf-8"))
         mapping.pop("_note")
         self.assertEqual(sorted(ids), sorted(mapping))

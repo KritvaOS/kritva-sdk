@@ -1,4 +1,687 @@
 {
+  "frame_graph/invalid/cycle_three_frames.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_CYCLE",
+        "transforms",
+        "cycle among frames: base, sensor, world"
+      ]
+    ]
+  },
+  "frame_graph/invalid/cycle_two_frames.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_CYCLE",
+        "transforms",
+        "cycle among frames: base, world"
+      ]
+    ]
+  },
+  "frame_graph/invalid/cycle_with_a_tail.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_CYCLE",
+        "transforms",
+        "cycle among frames: base, world"
+      ]
+    ]
+  },
+  "frame_graph/invalid/duplicate_edge.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_DUPLICATE_EDGE",
+        "transforms[1]",
+        "world -> base is already defined at transforms[0]"
+      ]
+    ]
+  },
+  "frame_graph/invalid/edge_not_object.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms[0]",
+        "transform must be an object"
+      ]
+    ]
+  },
+  "frame_graph/invalid/invalid_child_id.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_INVALID_FRAME_ID",
+        "transforms[0].child",
+        "frame id must match ^[a-z][a-z0-9_]{0,31}$"
+      ]
+    ]
+  },
+  "frame_graph/invalid/invalid_parent_id.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_INVALID_FRAME_ID",
+        "transforms[0].parent",
+        "frame id must match ^[a-z][a-z0-9_]{0,31}$"
+      ]
+    ]
+  },
+  "frame_graph/invalid/missing_parent.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].parent",
+        "required field is absent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/missing_transforms.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MISSING_FIELD",
+        "transforms",
+        "required field is absent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/missing_version.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MISSING_FIELD",
+        "contract_version",
+        "required field is absent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/multiple_parents.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MULTIPLE_PARENTS",
+        "transforms[1]",
+        "sensor already has parent world (transforms[0]); a frame has at most one parent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/parent_not_string.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms[0].parent",
+        "frame id must be a string"
+      ]
+    ]
+  },
+  "frame_graph/invalid/quaternion_extra_component.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_UNKNOWN_FIELD",
+        "transforms[0].rotation.extra",
+        "component is not defined by the contract"
+      ]
+    ]
+  },
+  "frame_graph/invalid/quaternion_infinite.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_NON_FINITE",
+        "transforms[0].rotation.w",
+        "must be finite"
+      ]
+    ]
+  },
+  "frame_graph/invalid/quaternion_just_outside_tolerance.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_NOT_UNIT_QUATERNION",
+        "transforms[0].rotation",
+        "norm must be 1 within 1e-09"
+      ]
+    ]
+  },
+  "frame_graph/invalid/quaternion_missing_z.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].rotation.z",
+        "required component is absent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/quaternion_not_unit.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_NOT_UNIT_QUATERNION",
+        "transforms[0].rotation",
+        "norm must be 1 within 1e-09"
+      ]
+    ]
+  },
+  "frame_graph/invalid/quaternion_zero.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_NOT_UNIT_QUATERNION",
+        "transforms[0].rotation",
+        "norm must be 1 within 1e-09"
+      ]
+    ]
+  },
+  "frame_graph/invalid/rotation_as_array.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms[0].rotation",
+        "must be an object with w, x, y, z"
+      ]
+    ]
+  },
+  "frame_graph/invalid/rotation_as_euler.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_UNKNOWN_FIELD",
+        "transforms[0].rotation.pitch",
+        "component is not defined by the contract"
+      ],
+      [
+        "FG_UNKNOWN_FIELD",
+        "transforms[0].rotation.roll",
+        "component is not defined by the contract"
+      ],
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].rotation.w",
+        "required component is absent"
+      ],
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].rotation.x",
+        "required component is absent"
+      ],
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].rotation.y",
+        "required component is absent"
+      ],
+      [
+        "FG_UNKNOWN_FIELD",
+        "transforms[0].rotation.yaw",
+        "component is not defined by the contract"
+      ],
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].rotation.z",
+        "required component is absent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/self_link.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_SELF_LINK",
+        "transforms[0]",
+        "parent and child are the same frame"
+      ]
+    ]
+  },
+  "frame_graph/invalid/several_faults.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_SELF_LINK",
+        "transforms[0]",
+        "parent and child are the same frame"
+      ],
+      [
+        "FG_NOT_UNIT_QUATERNION",
+        "transforms[1].rotation",
+        "norm must be 1 within 1e-09"
+      ]
+    ]
+  },
+  "frame_graph/invalid/transforms_not_array.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms",
+        "must be an array"
+      ]
+    ]
+  },
+  "frame_graph/invalid/translation_array.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms[0].translation",
+        "must be an object with x, y, z"
+      ]
+    ]
+  },
+  "frame_graph/invalid/translation_boolean.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms[0].translation.x",
+        "must be a number"
+      ]
+    ]
+  },
+  "frame_graph/invalid/translation_extra_component.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_UNKNOWN_FIELD",
+        "transforms[0].translation.w",
+        "component is not defined by the contract"
+      ]
+    ]
+  },
+  "frame_graph/invalid/translation_infinite.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_NON_FINITE",
+        "transforms[0].translation.x",
+        "must be finite"
+      ]
+    ]
+  },
+  "frame_graph/invalid/translation_missing_z.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MISSING_FIELD",
+        "transforms[0].translation.z",
+        "required component is absent"
+      ]
+    ]
+  },
+  "frame_graph/invalid/translation_string.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "transforms[0].translation.x",
+        "must be a number"
+      ]
+    ]
+  },
+  "frame_graph/invalid/unknown_edge_field.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_UNKNOWN_FIELD",
+        "transforms[0].extra",
+        "field is not defined by contract 0.1.0"
+      ]
+    ]
+  },
+  "frame_graph/invalid/unknown_top_field.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_UNKNOWN_FIELD",
+        "extra",
+        "field is not defined by contract 0.1.0"
+      ]
+    ]
+  },
+  "frame_graph/invalid/unsupported_version.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_UNSUPPORTED_VERSION",
+        "contract_version",
+        "'9.9.9' is not supported; supported: 0.1.0"
+      ]
+    ]
+  },
+  "frame_graph/invalid/version_not_string.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_MALFORMED",
+        "contract_version",
+        "must be a string"
+      ]
+    ]
+  },
+  "frame_graph/invalid/wrong_unit.json": {
+    "resolved": [],
+    "violations": [
+      [
+        "FG_INVALID_UNIT",
+        "transforms[0].translation_unit",
+        "must be 'm'"
+      ]
+    ]
+  },
+  "frame_graph/valid/chain_world_base_sensor.json": {
+    "resolved": [
+      [
+        "sensor",
+        "world",
+        {
+          "rotation": {
+            "w": 0.7071067811865476,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.7071067811865476
+          },
+          "translation": {
+            "x": 1.0,
+            "y": 2.1,
+            "z": 0.2
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "sensor",
+        "base",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 0.1,
+            "y": 0.0,
+            "z": 0.2
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "world",
+        "sensor",
+        {
+          "rotation": {
+            "w": 0.7071067811865476,
+            "x": 0.0,
+            "y": 0.0,
+            "z": -0.7071067811865476
+          },
+          "translation": {
+            "x": -2.1000000000000005,
+            "y": 1.0000000000000004,
+            "z": -0.2
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "base",
+        "world",
+        {
+          "rotation": {
+            "w": 0.7071067811865476,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.7071067811865476
+          },
+          "translation": {
+            "x": 1.0,
+            "y": 2.0,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "world",
+        "base",
+        {
+          "rotation": {
+            "w": 0.7071067811865476,
+            "x": 0.0,
+            "y": 0.0,
+            "z": -0.7071067811865476
+          },
+          "translation": {
+            "x": -2.0,
+            "y": 1.0000000000000009,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ]
+    ],
+    "violations": []
+  },
+  "frame_graph/valid/empty_graph.json": {
+    "resolved": [],
+    "violations": []
+  },
+  "frame_graph/valid/extra_frame_chain.json": {
+    "resolved": [
+      [
+        "tool_tip",
+        "world",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "world",
+        "tool_tip",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": -1.0,
+            "y": -1.0,
+            "z": -1.0
+          },
+          "translation_unit": "m"
+        }
+      ]
+    ],
+    "violations": []
+  },
+  "frame_graph/valid/negated_quaternion_same_rotation.json": {
+    "resolved": [
+      [
+        "base",
+        "world",
+        {
+          "rotation": {
+            "w": 0.7071067811865476,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.7071067811865476
+          },
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0
+          },
+          "translation_unit": "m"
+        }
+      ]
+    ],
+    "violations": []
+  },
+  "frame_graph/valid/rotation_180_about_x.json": {
+    "resolved": [
+      [
+        "base",
+        "world",
+        {
+          "rotation": {
+            "w": 0.0,
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "world",
+        "base",
+        {
+          "rotation": {
+            "w": 0.0,
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ]
+    ],
+    "violations": []
+  },
+  "frame_graph/valid/siblings_through_world.json": {
+    "resolved": [
+      [
+        "base",
+        "sensor",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 1.0,
+            "y": -2.0,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "sensor",
+        "base",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": -1.0,
+            "y": 2.0,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ]
+    ],
+    "violations": []
+  },
+  "frame_graph/valid/single_edge.json": {
+    "resolved": [
+      [
+        "base",
+        "world",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 1.0,
+            "y": 2.0,
+            "z": 3.0
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "world",
+        "base",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": -1.0,
+            "y": -2.0,
+            "z": -3.0
+          },
+          "translation_unit": "m"
+        }
+      ],
+      [
+        "base",
+        "base",
+        {
+          "rotation": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "translation_unit": "m"
+        }
+      ]
+    ],
+    "violations": []
+  },
+  "frame_graph/valid/unit_norm_within_tolerance.json": {
+    "resolved": [],
+    "violations": []
+  },
   "invalid/bad_sensor_id.json": [
     [
       "INVALID_SENSOR_ID",
@@ -166,6 +849,756 @@
       "measurements.accel_x.unit",
       "must be 'm/s^2' for accel_x"
     ]
+  ],
+  "stream/invalid/clock_mismatch.json": [
+    [
+      [
+        3,
+        "STREAM_CLOCK_MISMATCH",
+        "records[3].sample.timestamp.clock",
+        "utc differs from the stream clock monotonic"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/close_last_sequence_malformed.json": [
+    [
+      [
+        6,
+        "STREAM_MALFORMED",
+        "records[6].last_sequence",
+        "must be an integer >= 0"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/close_repeated.json": [
+    [
+      [
+        5,
+        "STREAM_CLOSE_REPEATED",
+        "records[5]",
+        "the stream is already closed"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/conformant_samples_stream_defects.json": [
+    [
+      [
+        3,
+        "STREAM_CLOCK_MISMATCH",
+        "records[3].sample.timestamp.clock",
+        "utc differs from the stream clock monotonic"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/defects_in_combination.json": [
+    [
+      [
+        2,
+        "STREAM_CLOCK_MISMATCH",
+        "records[2].sample.timestamp.clock",
+        "utc differs from the stream clock monotonic"
+      ],
+      [
+        2,
+        "STREAM_SEQUENCE_GAP",
+        "records[2].sample.sequence",
+        "sequence 101 to 102 missing (previous 100, this 103)"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_REGRESSION",
+        "records[3].sample.sequence",
+        "102 is lower than the previous sequence 103"
+      ],
+      [
+        4,
+        "STREAM_SENSOR_CHANGE",
+        "records[4].sample.sensor_id",
+        "'imu.other' differs from the stream sensor 'imu.main'"
+      ]
+    ],
+    [
+      [
+        2,
+        "INVALID_UNIT",
+        "measurements.accel_y.unit",
+        "must be 'm/s^2' for accel_y"
+      ]
+    ]
+  ],
+  "stream/invalid/document_not_object.json": [
+    [
+      [
+        -1,
+        "STREAM_MALFORMED",
+        "$",
+        "the document must be an object"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/duplicate_regression_gap_together.json": [
+    [
+      [
+        2,
+        "STREAM_SEQUENCE_DUPLICATE",
+        "records[2].sample.sequence",
+        "100 equals the previous sequence"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_REGRESSION",
+        "records[3].sample.sequence",
+        "99 is lower than the previous sequence 100"
+      ],
+      [
+        4,
+        "STREAM_SEQUENCE_GAP",
+        "records[4].sample.sequence",
+        "sequence 100 to 104 missing (previous 99, this 105)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/duplicate_then_gap_from_generator.json": [
+    [
+      [
+        4,
+        "STREAM_SEQUENCE_DUPLICATE",
+        "records[4].sample.sequence",
+        "102 equals the previous sequence"
+      ],
+      [
+        5,
+        "STREAM_SEQUENCE_GAP",
+        "records[5].sample.sequence",
+        "sequence 103 to 103 missing (previous 102, this 104)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/empty_stream.json": [
+    [
+      [
+        -1,
+        "STREAM_OPEN_MISSING",
+        "records",
+        "the stream has no open record"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/first_sequence_unmet.json": [
+    [
+      [
+        1,
+        "STREAM_FIRST_SEQUENCE_UNMET",
+        "records[1].sample.sequence",
+        "first sample has sequence 100, the open record states first_sequence 99"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/first_unmet_unterminated_without_samples.json": [
+    [
+      [
+        -1,
+        "STREAM_FIRST_SEQUENCE_UNMET",
+        "records",
+        "first_sequence 5 was stated but no sample followed the open record"
+      ],
+      [
+        -1,
+        "STREAM_UNTERMINATED",
+        "records",
+        "the stream has no close record; it is not repaired"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/first_unmet_without_samples.json": [
+    [
+      [
+        1,
+        "STREAM_FIRST_SEQUENCE_UNMET",
+        "records[1]",
+        "first_sequence 5 was stated but no sample followed the open record"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/gap_from_generator.json": [
+    [
+      [
+        4,
+        "STREAM_SEQUENCE_GAP",
+        "records[4].sample.sequence",
+        "sequence 103 to 107 missing (previous 102, this 108)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/index_duplicated.json": [
+    [
+      [
+        3,
+        "STREAM_INDEX_MISMATCH",
+        "records[3].index",
+        "index 2 at position 3"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/index_malformed.json": [
+    [
+      [
+        3,
+        "STREAM_MALFORMED",
+        "records[3].index",
+        "must be an integer >= 0"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/index_mismatch.json": [
+    [
+      [
+        3,
+        "STREAM_INDEX_MISMATCH",
+        "records[3].index",
+        "index 9 at position 3"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/index_missing.json": [
+    [
+      [
+        3,
+        "STREAM_MISSING_FIELD",
+        "records[3].index",
+        "required field is absent"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/kind_change.json": [
+    [
+      [
+        3,
+        "STREAM_KIND_CHANGE",
+        "records[3].sample.kind",
+        "'range' differs from the stream kind 'imu'"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/last_sequence_unmet.json": [
+    [
+      [
+        6,
+        "STREAM_LAST_SEQUENCE_UNMET",
+        "records[6].last_sequence",
+        "last sample has sequence 104, the close record states last_sequence 105"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/last_unmet_without_samples.json": [
+    [
+      [
+        1,
+        "STREAM_LAST_SEQUENCE_UNMET",
+        "records[1]",
+        "last_sequence 5 was stated but no sample followed the open record"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/lifecycle_combination.json": [
+    [
+      [
+        0,
+        "STREAM_SAMPLE_BEFORE_OPEN",
+        "records[0]",
+        "no open record precedes this sample"
+      ],
+      [
+        1,
+        "STREAM_CLOSE_BEFORE_OPEN",
+        "records[1]",
+        "no open record precedes this close"
+      ],
+      [
+        2,
+        "STREAM_OPEN_NOT_FIRST",
+        "records[2]",
+        "the open record must be the first record"
+      ],
+      [
+        5,
+        "STREAM_SAMPLE_AFTER_CLOSE",
+        "records[5]",
+        "the stream is closed"
+      ],
+      [
+        6,
+        "STREAM_CLOSE_REPEATED",
+        "records[6]",
+        "the stream is already closed"
+      ],
+      [
+        7,
+        "STREAM_OPEN_REPEATED",
+        "records[7]",
+        "the stream is already open; this record changes nothing"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/missing_records.json": [
+    [
+      [
+        -1,
+        "STREAM_MISSING_FIELD",
+        "records",
+        "required field is absent"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/missing_version.json": [
+    [
+      [
+        -1,
+        "STREAM_MISSING_FIELD",
+        "stream_version",
+        "required field is absent"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/open_malformed_fields.json": [
+    [
+      [
+        0,
+        "STREAM_MALFORMED",
+        "records[0].clock",
+        "must be one of monotonic, utc"
+      ],
+      [
+        0,
+        "STREAM_MALFORMED",
+        "records[0].first_sequence",
+        "must be an integer >= 0"
+      ],
+      [
+        0,
+        "STREAM_MALFORMED",
+        "records[0].kind",
+        "must be one of imu, range, encoder, temperature"
+      ],
+      [
+        0,
+        "STREAM_MALFORMED",
+        "records[0].sensor_id",
+        "must match the sensor identity pattern"
+      ],
+      [
+        0,
+        "STREAM_MALFORMED",
+        "records[0].stream_id",
+        "must match the identity pattern"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/open_missing.json": [
+    [
+      [
+        -1,
+        "STREAM_OPEN_MISSING",
+        "records",
+        "the stream has no open record"
+      ],
+      [
+        0,
+        "STREAM_SAMPLE_BEFORE_OPEN",
+        "records[0]",
+        "no open record precedes this sample"
+      ],
+      [
+        1,
+        "STREAM_SAMPLE_BEFORE_OPEN",
+        "records[1]",
+        "no open record precedes this sample"
+      ],
+      [
+        2,
+        "STREAM_SAMPLE_BEFORE_OPEN",
+        "records[2]",
+        "no open record precedes this sample"
+      ],
+      [
+        3,
+        "STREAM_CLOSE_BEFORE_OPEN",
+        "records[3]",
+        "no open record precedes this close"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/open_missing_fields.json": [
+    [
+      [
+        0,
+        "STREAM_MISSING_FIELD",
+        "records[0].clock",
+        "required field is absent"
+      ],
+      [
+        0,
+        "STREAM_MISSING_FIELD",
+        "records[0].sensor_id",
+        "required field is absent"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/open_not_first.json": [
+    [
+      [
+        0,
+        "STREAM_SAMPLE_BEFORE_OPEN",
+        "records[0]",
+        "no open record precedes this sample"
+      ],
+      [
+        1,
+        "STREAM_OPEN_NOT_FIRST",
+        "records[1]",
+        "the open record must be the first record"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/open_only.json": [
+    [
+      [
+        -1,
+        "STREAM_UNTERMINATED",
+        "records",
+        "the stream has no close record; it is not repaired"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/open_repeated.json": [
+    [
+      [
+        2,
+        "STREAM_OPEN_REPEATED",
+        "records[2]",
+        "the stream is already open; this record changes nothing"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/record_kind_missing.json": [
+    [
+      [
+        2,
+        "STREAM_MISSING_FIELD",
+        "records[2].record",
+        "required field is absent"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_GAP",
+        "records[3].sample.sequence",
+        "sequence 101 to 101 missing (previous 100, this 102)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/record_not_object.json": [
+    [
+      [
+        2,
+        "STREAM_MALFORMED",
+        "records[2]",
+        "a record must be an object"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_GAP",
+        "records[3].sample.sequence",
+        "sequence 101 to 101 missing (previous 100, this 102)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/records_not_array.json": [
+    [
+      [
+        -1,
+        "STREAM_MALFORMED",
+        "records",
+        "must be an array"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/regression_below_start.json": [
+    [
+      [
+        3,
+        "STREAM_SEQUENCE_REGRESSION",
+        "records[3].sample.sequence",
+        "99 is lower than the previous sequence 101"
+      ],
+      [
+        4,
+        "STREAM_SEQUENCE_GAP",
+        "records[4].sample.sequence",
+        "sequence 100 to 102 missing (previous 99, this 103)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/regression_then_continue.json": [
+    [
+      [
+        4,
+        "STREAM_SEQUENCE_REGRESSION",
+        "records[4].sample.sequence",
+        "90 is lower than the previous sequence 102"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/sample_after_close.json": [
+    [
+      [
+        4,
+        "STREAM_SAMPLE_AFTER_CLOSE",
+        "records[4]",
+        "the stream is closed"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/sample_missing.json": [
+    [
+      [
+        2,
+        "STREAM_MISSING_FIELD",
+        "records[2].sample",
+        "required field is absent"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_GAP",
+        "records[3].sample.sequence",
+        "sequence 101 to 101 missing (previous 100, this 102)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/sample_not_object.json": [
+    [
+      [
+        2,
+        "STREAM_MALFORMED",
+        "records[2].sample",
+        "must be an object"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_GAP",
+        "records[3].sample.sequence",
+        "sequence 101 to 101 missing (previous 100, this 102)"
+      ]
+    ],
+    [
+      [
+        2,
+        "MALFORMED_FIELD",
+        "$",
+        "sample must be an object"
+      ]
+    ]
+  ],
+  "stream/invalid/sample_violation_only.json": [
+    [],
+    [
+      [
+        3,
+        "INVALID_UNIT",
+        "measurements.accel_x.unit",
+        "must be 'm/s^2' for accel_x"
+      ]
+    ]
+  ],
+  "stream/invalid/sensor_change.json": [
+    [
+      [
+        3,
+        "STREAM_SENSOR_CHANGE",
+        "records[3].sample.sensor_id",
+        "'imu.other' differs from the stream sensor 'imu.main'"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/timestamp_regression.json": [
+    [
+      [
+        4,
+        "STREAM_TIMESTAMP_REGRESSION",
+        "records[4].sample.timestamp.value",
+        "1019999999 is lower than the previous timestamp 1020000000"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/timestamp_unit_not_usable.json": [
+    [],
+    [
+      [
+        3,
+        "INVALID_TIMESTAMP",
+        "timestamp.unit",
+        "must be 'ns'"
+      ]
+    ]
+  ],
+  "stream/invalid/unknown_document_field.json": [
+    [
+      [
+        -1,
+        "STREAM_UNKNOWN_FIELD",
+        "extra",
+        "field is not defined by stream contract 0.1.0"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/unknown_record_field.json": [
+    [
+      [
+        2,
+        "STREAM_UNKNOWN_FIELD",
+        "records[2].extra",
+        "field is not defined by the contract"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/unknown_record_kind.json": [
+    [
+      [
+        2,
+        "STREAM_UNKNOWN_RECORD",
+        "records[2].record",
+        "must be one of open, sample, close"
+      ],
+      [
+        3,
+        "STREAM_SEQUENCE_GAP",
+        "records[3].sample.sequence",
+        "sequence 101 to 101 missing (previous 100, this 102)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/unsupported_version.json": [
+    [
+      [
+        -1,
+        "STREAM_UNSUPPORTED_VERSION",
+        "stream_version",
+        "9.9.9 is not supported (supported: 0.1.0)"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/unterminated.json": [
+    [
+      [
+        -1,
+        "STREAM_UNTERMINATED",
+        "records",
+        "the stream has no close record; it is not repaired"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/version_not_string.json": [
+    [
+      [
+        -1,
+        "STREAM_MALFORMED",
+        "stream_version",
+        "must be a string"
+      ]
+    ],
+    []
+  ],
+  "stream/invalid/worked_example_gap.json": [
+    [
+      [
+        2,
+        "STREAM_SEQUENCE_GAP",
+        "records[2].sample.sequence",
+        "sequence 101 to 101 missing (previous 100, this 102)"
+      ]
+    ],
+    []
+  ],
+  "stream/valid/encoder_monotonic.json": [
+    [],
+    []
+  ],
+  "stream/valid/equal_timestamps.json": [
+    [],
+    []
+  ],
+  "stream/valid/imu_with_bounds.json": [
+    [],
+    []
+  ],
+  "stream/valid/imu_without_bounds.json": [
+    [],
+    []
+  ],
+  "stream/valid/no_first_or_last_inferred.json": [
+    [],
+    []
+  ],
+  "stream/valid/open_close_no_samples.json": [
+    [],
+    []
+  ],
+  "stream/valid/range_utc.json": [
+    [],
+    []
+  ],
+  "stream/valid/temperature_monotonic.json": [
+    [],
+    []
+  ],
+  "stream/valid/validity_states_are_conformant.json": [
+    [],
+    []
+  ],
+  "stream/valid/worked_example.json": [
+    [],
+    []
   ],
   "valid/encoder_valid.json": [],
   "valid/imu_valid.json": [],
