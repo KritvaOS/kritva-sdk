@@ -2,15 +2,15 @@
 
 # Progress: KritvaOS/kritva-sdk
 
-Derived snapshot of the kritva-program status view, taken 2026-11-27T02:53:17Z at baseline v16 (APPROVED). It can lag the program. The program view is the record: [https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md](https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md).
+Derived snapshot of the kritva-program status view, taken 2026-11-28T03:27:13Z at baseline v17 (APPROVED). It can lag the program. The program view is the record: [https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md](https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md).
 
 This repository sends facts only and earns no program credit by itself. Acceptance is decided by kritva-program, and this file never approves anything.
 
 ## Accepted progress
 
 ```text
-Accepted weight: 27.3%  (18 / 66 weight, 3 of 13 tasks)
-█████░░░░░░░░░░░░░░░
+Accepted weight: 34.8%  (23 / 66 weight, 4 of 13 tasks)
+███████░░░░░░░░░░░░░
 ```
 
 Accepted weight over total weight, where total covers completed Foundation work, baselined V2 tasks and owner-approved V2 planning tasks that are not baselined yet. Planning-only tasks are in the total and earn nothing until they are baselined and accepted. Weights are estimates.
@@ -21,12 +21,12 @@ Accepted weight over total weight, where total covers completed Foundation work,
 |---|---|---|---|
 | M1 Studio | `████████████████████` | 4 / 4 | 100.0% |
 | M2 Build & Artifact | `████████████████████` | 14 / 14 | 100.0% |
-| M3 Control Plane | `░░░░░░░░░░░░░░░░░░░░` | 0 / 16 | 0.0% |
+| M3 Control Plane | `██████░░░░░░░░░░░░░░` | 5 / 16 | 31.2% |
 | M4 Booking & Commercial | `░░░░░░░░░░░░░░░░░░░░` | 0 / 9 | 0.0% |
 | M5 Execution | `░░░░░░░░░░░░░░░░░░░░` | 0 / 13 | 0.0% |
 | M7 Live & Results | `░░░░░░░░░░░░░░░░░░░░` | 0 / 4 | 0.0% |
 | M8 Production | `░░░░░░░░░░░░░░░░░░░░` | 0 / 6 | 0.0% |
-| **All** | `█████░░░░░░░░░░░░░░░` | **18 / 66** | **27.3%** |
+| **All** | `███████░░░░░░░░░░░░░` | **23 / 66** | **34.8%** |
 
 Milestone dates are owner-approved planning dates in the program, not delivery commitments.
 
@@ -39,6 +39,7 @@ Tasks in the approved program baseline. Weight is the baseline weight. Acceptanc
 | `KOS-SDK-001` | Python-first SDK architecture and developer API design | M1 | 4 | COMPLETE | ACCEPTED |
 | `KOS-SDK-002` | Python package foundation and reproducible build, with clean-environment installation and import tests | M2 | 8 | COMPLETE | ACCEPTED |
 | `KOS-SDK-003` | Configuration, contract compatibility and Sense models | M2 | 6 | COMPLETE | ACCEPTED |
+| `KOS-SDK-005` | Sense API, stream and frame-graph adapters | M3 | 5 | COMPLETE | ACCEPTED |
 
 ## Planned tasks (not baselined)
 
@@ -47,7 +48,6 @@ Owner-approved V2 planning scope that is not in the baseline yet. Weights are es
 | Task | Title | Milestone | Estimated weight | Execution | Acceptance |
 |---|---|---|---|---|---|
 | `PROPOSED-NEW-SDK-004` | Control Plane client and transport foundation (excludes job operations; conditional on an approved Control Plane API) | M3 | 5 | NOT_STARTED | NOT BASELINED |
-| `PROPOSED-NEW-SDK-005` | Sense API, stream and frame-graph adapters | M3 | 5 | NOT_STARTED | NOT BASELINED |
 | `PROPOSED-NEW-SDK-009` | Motion, Mind and Skill adapters (conditional on approved, tagged component contracts) | M3 | 6 | NOT_STARTED | NOT BASELINED |
 | `PROPOSED-NEW-COMMUNITY-012-01` | SDK developer API and CLI | M4 | 4 | NOT_STARTED | NOT BASELINED |
 | `PROPOSED-NEW-COMMUNITY-012-02` | SDK examples, documentation and clean-environment tests | M4 | 5 | NOT_STARTED | NOT BASELINED |
@@ -61,9 +61,9 @@ Owner-approved V2 planning scope that is not in the baseline yet. Weights are es
 
 | State | This repository | Decided by |
 |---|---|---|
-| Execution | 3 of 3 baselined tasks reported COMPLETE by this repository | this repository's own report |
+| Execution | 4 of 4 baselined tasks reported COMPLETE by this repository | this repository's own report |
 | Evidence | no evidence gap recorded for this repository in the program's evidence health | the program's CI run verification |
-| Acceptance | 18 / 66 weight (bar above) | kritva-program approvals |
+| Acceptance | 23 / 66 weight (bar above) | kritva-program approvals |
 | Release readiness | NOT_READY for the program; this progress figure is not readiness | program gates |
 
 Reported execution is not acceptance, and a bar is not release readiness. Refresh this file by running `tools/publish_repo_progress.py` in kritva-program and merging the resulting pull request here.
