@@ -1,5 +1,8 @@
 # Planning Changelog
 
+## 2026-11-28 (KOS-SDK-005 documentation wording)
+- Found in the manual review of KOS-SDK-005 (AC-006): API.md and ARCHITECTURE.md still described the stream and frame-graph adapters as a later increment. Both now say they are implemented under KOS-SDK-005, matching the support matrix. Wording only; no code, gate or task change.
+
 ## 2026-11-28 (KOS-SDK-005 status report)
 - kritva-program baselined KOS-SDK-005 in baseline v17 (D-161, weight 5, V2-M3-SDK-001). `status/status.json` now reports it COMPLETE with the seven CI runs on main commit 3505859 (pull request 20, the last of pull requests 17 to 20). This is an execution report only: the 18 manual acceptance criteria need the owner's recorded review, and acceptance and credit need the owner's approval record in kritva-program.
 
