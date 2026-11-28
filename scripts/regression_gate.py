@@ -22,7 +22,7 @@ GOLDEN = ROOT / "tests" / "regression" / "golden"
 DATA = ROOT / "tests" / "data" / "sense"
 VENDOR = ROOT / "src" / "kritva_sdk" / "_schemas" / "sense"
 MODULES = ("kritva_sdk", "kritva_sdk.errors", "kritva_sdk.compat", "kritva_sdk.config", "kritva_sdk.sense",
-           "kritva_sdk.stream")
+           "kritva_sdk.stream", "kritva_sdk.frame_graph")
 
 
 def _sig(obj):

@@ -29,6 +29,12 @@ Evidence records exact commit SHA, CI run ID, command, result, environment and s
 - **Oracle cross-validation.** `make conformance-test` also runs `tests/conformance/test_stream_oracle.py`: exact (position, code, path, message) parity with the pinned reference checker on the fixtures, the harness stream cases, every batch split of short fixtures and 3,000 seeded mutations (fixed seed).
 - **Not covered.** Freshness, transport, loss recovery and stream merging are not defined by the contract and are not tested.
 
+## Frame graph contract conformance (KOS-SDK-005)
+
+- **Fixtures (offline).** `tests/data/frame_graph/` holds byte-exact copies of the 42 upstream frame graph fixtures (kritva-sense `v0.2.0`, commit `543f5743d6ffd8fa1ed1ee5fdbf8295ae6a69a77`), each carrying its own upstream-authored expectation (expected codes, or hand-derived resolved transforms), with `PROVENANCE.json`; `make schema-drift` verifies their hashes. `tests/unit/test_frame_graph.py` runs them with hand-derived resolution cases, canonical form, the `Resolution` type, point transformation, typed misuse errors and import hygiene.
+- **Oracle cross-validation.** `make conformance-test` also runs `tests/conformance/test_frame_graph_oracle.py`: exact (code, path, message) parity with the pinned reference implementation on fixtures, every frame pair of every fixture, harness cases, generated graphs and defects, and 3,000 seeded mutations (fixed seed); numerical parity of resolved transforms and transformed points (exact equality, stated tolerance 1e-9); and the inverse round trip.
+- **Not covered.** Physical correctness of any frame or calibration, time synchronisation and transport are not defined by the contract and are not tested.
+
 ## Gates (implemented)
 
 | Gate | Command | What it does | Needs |

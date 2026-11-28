@@ -14,16 +14,17 @@ from kritva_sdk.errors import ContractError, SdkError, UnsupportedContractVersio
 
 class CompatTest(unittest.TestCase):
     def test_supported_contracts_declaration(self):
-        self.assertEqual(supported_contracts(), {"sense": ("0.1.0",), "stream": ("0.1.0",)})
+        self.assertEqual(supported_contracts(), {"sense": ("0.1.0",), "stream": ("0.1.0",), "frame_graph": ("0.1.0",)})
 
     def test_declaration_is_not_mutable_through_result(self):
         supported_contracts()["sense"] = ("9.9.9",)
         supported_contracts().pop("sense")
-        self.assertEqual(supported_contracts(), {"sense": ("0.1.0",), "stream": ("0.1.0",)})
+        self.assertEqual(supported_contracts(), {"sense": ("0.1.0",), "stream": ("0.1.0",), "frame_graph": ("0.1.0",)})
 
     def test_supported_version_returned(self):
         self.assertEqual(require_supported("sense", "0.1.0"), "0.1.0")
         self.assertEqual(require_supported("stream", "0.1.0"), "0.1.0")
+        self.assertEqual(require_supported("frame_graph", "0.1.0"), "0.1.0")
 
     def test_unsupported_version_fails_early_with_upstream_code(self):
         for bad in ("0.2.0", "", "0.1", "1.0.0", "0.1.0 "):
