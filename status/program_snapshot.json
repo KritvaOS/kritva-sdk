@@ -1,13 +1,13 @@
 {
   "baseline_tasks": {
-    "accepted_tasks": 3,
-    "baseline_tasks": 3,
-    "rows": 10
+    "accepted_tasks": 4,
+    "baseline_tasks": 4,
+    "rows": 9
   },
   "evidence_notes": [],
   "execution": {
-    "complete": 3,
-    "tasks": 3
+    "complete": 4,
+    "tasks": 4
   },
   "foundation": {
     "accepted_tasks": 0,
@@ -29,10 +29,10 @@
       "rows": 0
     },
     "M3": {
-      "accepted": 0,
-      "baseline": 0,
-      "point": 16,
-      "rows": 3
+      "accepted": 5,
+      "baseline": 5,
+      "point": 11,
+      "rows": 2
     },
     "M4": {
       "accepted": 0,
@@ -61,8 +61,8 @@
   },
   "program": {
     "baseline_approved": true,
-    "baseline_version": 16,
-    "generated_at": "2026-11-27T02:53:17Z",
+    "baseline_version": 17,
+    "generated_at": "2026-11-28T03:27:13Z",
     "release_state": "NOT_READY",
     "view": "https://github.com/KritvaOS/kritva-program/blob/main/v2/tracking/STATUS_VIEW.md"
   },
@@ -98,6 +98,15 @@
       "weight": 6
     },
     {
+      "accepted": true,
+      "execution": "COMPLETE",
+      "id": "KOS-SDK-005",
+      "kind": "baselined",
+      "milestone": "M3",
+      "title": "Sense API, stream and frame-graph adapters",
+      "weight": 5
+    },
+    {
       "accepted": false,
       "execution": "NOT_STARTED",
       "id": "PROPOSED-NEW-COMMUNITY-012-01",
@@ -131,15 +140,6 @@
       "kind": "planned",
       "milestone": "M5",
       "title": "SDK result retrieval and error handling",
-      "weight": 5
-    },
-    {
-      "accepted": false,
-      "execution": "NOT_STARTED",
-      "id": "PROPOSED-NEW-SDK-005",
-      "kind": "planned",
-      "milestone": "M3",
-      "title": "Sense API, stream and frame-graph adapters",
       "weight": 5
     },
     {
