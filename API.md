@@ -72,7 +72,7 @@ A transport abstraction and async clients are deferred until an approved Control
 
 1. **Validator:** the SDK has no runtime dependency on kritva-sense. It carries its own hand-written validation against its vendored schema; the pinned kritva-sense validator, generator and conformance harness are test and CI oracles with cross-validation tests. Upstream is authoritative for contract semantics.
 2. **Python and dependencies:** Python 3.12+; zero runtime dependencies in the first release; `jsonschema` test-only.
-3. **Sense stream and frame-graph contracts:** approved and eligible, implemented in a later increment under KOS-SDK-005.
+3. **Sense stream and frame-graph contracts:** approved and eligible, implemented under KOS-SDK-005 (`kritva_sdk.stream`, `kritva_sdk.frame_graph`; see the support matrix).
 
 ## Open decisions
 
